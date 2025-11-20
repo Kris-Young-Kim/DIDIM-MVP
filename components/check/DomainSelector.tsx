@@ -90,18 +90,18 @@ export default function DomainSelector({
             key={domain.id}
             onClick={() => onToggle(domain.id)}
             className={cn(
-              "flex flex-col items-start p-5 rounded-xl border-2 transition-all duration-200 text-left h-full group relative overflow-hidden",
+              "flex flex-col items-start p-5 rounded-xl border transition-all duration-200 text-left h-full group relative overflow-hidden glass",
               isSelected
-                ? "border-[#6c47ff] bg-[#6c47ff]/5 shadow-md ring-1 ring-[#6c47ff]"
-                : "border-gray-100 bg-white hover:border-gray-200 hover:shadow-sm"
+                ? "border-primary/60 bg-primary/10 shadow-primary/30"
+                : "border-white/10 hover:border-white/20 hover:bg-white/5"
             )}
           >
             <div
               className={cn(
                 "p-3 rounded-lg mb-4 transition-colors",
                 isSelected
-                  ? "bg-[#6c47ff] text-white"
-                  : "bg-gray-100 text-gray-500 group-hover:bg-gray-200"
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/40"
+                  : "bg-white/5 text-foreground/70 group-hover:bg-white/10"
               )}
             >
               <Icon className="w-6 h-6" />
@@ -110,17 +110,17 @@ export default function DomainSelector({
               <h3
                 className={cn(
                   "font-bold text-lg mb-1",
-                  isSelected ? "text-[#6c47ff]" : "text-gray-900"
+                  isSelected ? "text-primary" : "text-white"
                 )}
               >
                 {domain.label}
               </h3>
-              <p className="text-sm text-gray-500 leading-relaxed">
+              <p className="text-sm text-foreground/70 leading-relaxed">
                 {domain.description}
               </p>
             </div>
             {isSelected && (
-              <div className="absolute top-3 right-3 w-3 h-3 bg-[#6c47ff] rounded-full" />
+              <div className="absolute top-3 right-3 w-3 h-3 bg-primary rounded-full shadow-[0_0_12px_rgba(99,102,241,0.5)]" />
             )}
           </button>
         );

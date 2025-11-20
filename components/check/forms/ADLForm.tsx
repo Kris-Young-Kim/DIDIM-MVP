@@ -29,7 +29,7 @@ export default function ADLForm() {
         name="adl.eating"
         render={({ field }) => (
           <FormItem className="space-y-3">
-            <FormLabel>식사하기</FormLabel>
+            <FormLabel className="text-foreground font-semibold">식사하기</FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
@@ -37,9 +37,15 @@ export default function ADLForm() {
                 className="flex flex-col space-y-1"
               >
                 {options.map((opt) => (
-                  <div key={`eat-${opt.value}`} className="flex items-center space-x-3 space-y-0">
+                  <div
+                    key={`eat-${opt.value}`}
+                    className="flex items-center space-x-3 space-y-0"
+                  >
                     <RadioGroupItem value={opt.value} id={`eat-${opt.value}`} />
-                    <Label htmlFor={`eat-${opt.value}`} className="font-normal">
+                    <Label
+                      htmlFor={`eat-${opt.value}`}
+                      className="font-normal text-foreground/80"
+                    >
                       {opt.label}
                     </Label>
                   </div>
@@ -51,7 +57,7 @@ export default function ADLForm() {
         )}
       />
 
-      <div className="my-4 border-t border-dashed border-gray-100" />
+      <div className="my-4 border-t border-dashed border-white/10" />
 
       {/* Dressing */}
       <FormField
@@ -59,7 +65,7 @@ export default function ADLForm() {
         name="adl.dressing"
         render={({ field }) => (
           <FormItem className="space-y-3">
-            <FormLabel>옷 입고 벗기</FormLabel>
+            <FormLabel className="text-foreground font-semibold">옷 입고 벗기</FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
@@ -67,9 +73,15 @@ export default function ADLForm() {
                 className="flex flex-col space-y-1"
               >
                 {options.map((opt) => (
-                  <div key={`dress-${opt.value}`} className="flex items-center space-x-3 space-y-0">
+                  <div
+                    key={`dress-${opt.value}`}
+                    className="flex items-center space-x-3 space-y-0"
+                  >
                     <RadioGroupItem value={opt.value} id={`dress-${opt.value}`} />
-                    <Label htmlFor={`dress-${opt.value}`} className="font-normal">
+                    <Label
+                      htmlFor={`dress-${opt.value}`}
+                      className="font-normal text-foreground/80"
+                    >
                       {opt.label}
                     </Label>
                   </div>
@@ -81,7 +93,7 @@ export default function ADLForm() {
         )}
       />
 
-      <div className="my-4 border-t border-dashed border-gray-100" />
+      <div className="my-4 border-t border-dashed border-white/10" />
 
       {/* Bathing */}
       <FormField
@@ -89,7 +101,7 @@ export default function ADLForm() {
         name="adl.bathing"
         render={({ field }) => (
           <FormItem className="space-y-3">
-            <FormLabel>목욕/샤워하기</FormLabel>
+            <FormLabel className="text-foreground font-semibold">목욕/샤워하기</FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
@@ -97,9 +109,15 @@ export default function ADLForm() {
                 className="flex flex-col space-y-1"
               >
                 {options.map((opt) => (
-                  <div key={`bath-${opt.value}`} className="flex items-center space-x-3 space-y-0">
+                  <div
+                    key={`bath-${opt.value}`}
+                    className="flex items-center space-x-3 space-y-0"
+                  >
                     <RadioGroupItem value={opt.value} id={`bath-${opt.value}`} />
-                    <Label htmlFor={`bath-${opt.value}`} className="font-normal">
+                    <Label
+                      htmlFor={`bath-${opt.value}`}
+                      className="font-normal text-foreground/80"
+                    >
                       {opt.label}
                     </Label>
                   </div>

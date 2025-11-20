@@ -15,35 +15,61 @@ interface AIAnalysisResult {
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? "");
 
 export async function submitAssessment(data: AssessmentData) {
+  console.group("[Server Action] submitAssessment Start");
+  console.log("Input data:", JSON.stringify(data, null, 2));
+  
   try {
     const { userId } = await auth(); // Can be null if guest
+    console.log("User ID:", userId);
 
     // 1. Gemini AI Analysis (with graceful fallback)
     let aiAnalysis: AIAnalysisResult = buildFallbackAnalysis(data);
     try {
       if (!process.env.GEMINI_API_KEY) {
-        throw new Error("GEMINI_API_KEY가 존재하지 않습니다.");
+        console.warn("GEMINI_API_KEY not found, using fallback analysis");
+        aiAnalysis = buildFallbackAnalysis(data);
+      } else {
+        const model = genAI.getGenerativeModel({
+          model: "gemini-1.5-flash",
+          generationConfig: { responseMimeType: "application/json" },
+        });
+
+        const prompt = createPrompt(data);
+        const result = await model.generateContent(prompt);
+        const response = result.response;
+        const text = response.text();
+
+        console.log("Gemini Raw Response:", text);
+        aiAnalysis = parseGeminiResponse(text);
+        console.log("Parsed Analysis:", aiAnalysis);
       }
-
-      const model = genAI.getGenerativeModel({
-        model: "gemini-1.5-flash",
-        generationConfig: { responseMimeType: "application/json" },
-      });
-
-      const prompt = createPrompt(data);
-      const result = await model.generateContent(prompt);
-      const response = result.response;
-      const text = response.text();
-
-      console.log("Gemini Raw Response:", text);
-      aiAnalysis = parseGeminiResponse(text);
     } catch (analysisError) {
       console.error("Gemini Analysis Error:", analysisError);
+      console.log("Using fallback analysis");
       aiAnalysis = buildFallbackAnalysis(data);
     }
 
     // 2. Product Matching (Supabase)
-    const supabase = getServiceRoleClient();
+    let supabase;
+    try {
+      // 환경 변수 확인
+      if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+        throw new Error("NEXT_PUBLIC_SUPABASE_URL 환경 변수가 설정되지 않았습니다.");
+      }
+      if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        throw new Error("SUPABASE_SERVICE_ROLE_KEY 환경 변수가 설정되지 않았습니다.");
+      }
+      
+      supabase = getServiceRoleClient();
+      console.log("Supabase client initialized successfully");
+    } catch (supabaseError) {
+      console.error("Supabase Client Error:", supabaseError);
+      throw new Error(
+        supabaseError instanceof Error 
+          ? `데이터베이스 연결 실패: ${supabaseError.message}` 
+          : "데이터베이스 연결에 실패했습니다. 잠시 후 다시 시도해주세요."
+      );
+    }
 
     // Strategy: Fetch products in the target domain, then score/filter
     const { data: products, error: productError } = await supabase
@@ -51,10 +77,13 @@ export async function submitAssessment(data: AssessmentData) {
       .select("*")
       .eq("domain", aiAnalysis.target_domain);
 
-    if (productError) throw new Error(`Product Fetch Error: ${productError.message}`);
+    if (productError) {
+      console.error("Product Fetch Error:", productError);
+      // Products fetch 실패해도 계속 진행 (빈 배열로)
+    }
 
     // Simple ranking in memory
-    const rankedProducts = products?.map(product => {
+    const rankedProducts = (products || []).map(product => {
       let score = 0;
       // Category match
       if (product.category === aiAnalysis.recommended_category) score += 10;
@@ -65,45 +94,117 @@ export async function submitAssessment(data: AssessmentData) {
       return { ...product, score };
     }).sort((a, b) => b.score - a.score).slice(0, 5); // Top 5
 
+    console.log("Ranked Products:", rankedProducts.length);
+
     // 3. Save Logs
     // Need to get internal UUID for user if logged in
     let internalUserId = null;
     if (userId) {
-        const { data: userData } = await supabase.from("users").select("id").eq("clerk_id", userId).single();
-        internalUserId = userData?.id;
+      try {
+        const { data: userData, error: userError } = await supabase
+          .from("users")
+          .select("id")
+          .eq("clerk_id", userId)
+          .single();
+        
+        if (userError) {
+          console.warn("User lookup error (non-critical):", userError);
+        } else {
+          internalUserId = userData?.id;
+        }
+      } catch (userLookupError) {
+        console.warn("User lookup failed (non-critical):", userLookupError);
+      }
     }
+
+    console.log("Attempting to insert assessment log...");
+    console.log("User ID:", internalUserId);
+    console.log("Input data size:", JSON.stringify(data).length);
+    console.log("Analysis data size:", JSON.stringify(aiAnalysis).length);
+
+    const insertPayload = {
+      user_id: internalUserId,
+      input_data: data as any, // JSONB
+      gemini_analysis: aiAnalysis as any, // JSONB
+    };
+
+    console.log("Insert payload keys:", Object.keys(insertPayload));
 
     const { data: logData, error: logError } = await supabase
       .from("assessment_logs")
-      .insert({
-        user_id: internalUserId,
-        input_data: data as any, // JSONB
-        gemini_analysis: aiAnalysis as any, // JSONB
-      })
+      .insert(insertPayload)
       .select()
       .single();
 
-    if (logError) console.error("Log Error:", logError);
-
-    // 4. Save Recommendations
-    if (logData && rankedProducts && rankedProducts.length > 0) {
-       const recommendations = rankedProducts.map(p => ({
-           log_id: logData.id,
-           product_id: p.id,
-       }));
-       
-       await supabase.from("recommendations").insert(recommendations);
+    if (logError) {
+      console.error("Log Insert Error Details:");
+      console.error("Error Code:", logError.code);
+      console.error("Error Message:", logError.message);
+      console.error("Error Details:", logError.details);
+      console.error("Error Hint:", logError.hint);
+      console.error("Full Error:", JSON.stringify(logError, null, 2));
+      throw new Error(
+        `데이터 저장 실패: ${logError.message || logError.code || "알 수 없는 오류"}`
+      );
     }
 
-    return {
-        logId: logData?.id,
-        analysis: aiAnalysis,
-        products: rankedProducts
+    if (!logData) {
+      console.error("Log Insert returned no data");
+      throw new Error("분석 결과를 저장하는 중 오류가 발생했습니다. 데이터가 반환되지 않았습니다.");
+    }
+
+    console.log("Log saved with ID:", logData.id);
+
+    // 4. Save Recommendations (non-critical, continue even if fails)
+    if (rankedProducts && rankedProducts.length > 0) {
+      try {
+        const recommendations = rankedProducts.map(p => ({
+          log_id: logData.id,
+          product_id: p.id,
+        }));
+        
+        const { error: recError } = await supabase
+          .from("recommendations")
+          .insert(recommendations);
+        
+        if (recError) {
+          console.warn("Recommendations insert error (non-critical):", recError);
+        } else {
+          console.log("Recommendations saved:", recommendations.length);
+        }
+      } catch (recError) {
+        console.warn("Recommendations save failed (non-critical):", recError);
+      }
+    }
+
+    const result = {
+      logId: logData.id,
+      analysis: aiAnalysis,
+      products: rankedProducts || []
     };
 
+    console.log("Submit Assessment Success:", result);
+    console.groupEnd();
+    
+    return result;
+
   } catch (error) {
-    console.error("Submit Assessment Error:", error);
-    throw error;
+    console.groupEnd();
+    console.error("[Server Action] Submit Assessment Error:", error);
+    
+    // 사용자 친화적인 에러 메시지로 변환
+    if (error instanceof Error) {
+      // 이미 명시적인 메시지가 있으면 그대로 사용
+      if (error.message.includes("데이터베이스") || 
+          error.message.includes("저장") ||
+          error.message.includes("연결")) {
+        throw error;
+      }
+      // 그 외에는 일반적인 메시지
+      throw new Error(`분석 처리 중 오류가 발생했습니다: ${error.message}`);
+    }
+    
+    throw new Error("알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
   }
 }
 

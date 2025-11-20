@@ -68,7 +68,7 @@ export default function CheckPage() {
     mode: "onChange",
   });
 
-  const [selectedDomains, setSelectedDomains] = useState<DomainId[]>(() => form.getValues("selectedDomains") ?? []);
+  const [selectedDomains, setSelectedDomains] = useState<DomainId[]>([]);
 
   const clearDomainValues = (domainId: DomainId) => {
     const fieldKey = domainFieldKeyMap[domainId];

@@ -136,18 +136,31 @@ export default function CheckPage() {
 
     try {
       setIsSubmitting(true);
+      console.group("[Assessment] Submit Start");
+      console.log("Form Data:", data);
+      console.groupEnd();
+      
       const result = await submitAssessment(data);
       
-      console.log("Analysis Result:", result);
+      console.group("[Assessment] Submit Success");
+      console.log("Result:", result);
+      console.log("Log ID:", result?.logId);
+      console.groupEnd();
 
-      if (result?.logId) {
-        router.push(`/result/${result.logId}`);
-      } else {
-        throw new Error("No log ID returned");
+      if (!result?.logId) {
+        throw new Error("분석 결과를 저장하는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
       }
+
+      router.push(`/result/${result.logId}`);
     } catch (error) {
-      console.error("Submission Error:", error);
-      alert(`오류가 발생했습니다: ${error instanceof Error ? error.message : "알 수 없는 오류"}`);
+      console.group("[Assessment] Submit Error");
+      console.error("Error:", error);
+      console.groupEnd();
+      
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : "알 수 없는 오류가 발생했습니다.";
+      alert(`오류가 발생했습니다: ${errorMessage}`);
     } finally {
       setIsSubmitting(false);
     }

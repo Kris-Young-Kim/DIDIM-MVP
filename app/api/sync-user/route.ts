@@ -28,26 +28,49 @@ export async function POST() {
     // Supabase에 사용자 정보 동기화
     const supabase = getServiceRoleClient();
 
-    const { data, error } = await supabase
+    // 먼저 기존 사용자 확인
+    const { data: existingUser } = await supabase
       .from("users")
-      .upsert(
-        {
-          clerk_id: clerkUser.id,
-          name:
-            clerkUser.fullName ||
-            clerkUser.username ||
-            clerkUser.emailAddresses[0]?.emailAddress ||
-            "Unknown",
-        },
-        {
-          onConflict: "clerk_id",
-        }
-      )
-      .select()
+      .select("id, clerk_id, name")
+      .eq("clerk_id", clerkUser.id)
       .single();
+
+    const userName =
+      clerkUser.fullName ||
+      clerkUser.username ||
+      clerkUser.emailAddresses[0]?.emailAddress ||
+      "Unknown";
+
+    let data;
+    let error;
+
+    if (existingUser) {
+      // 업데이트
+      const { data: updatedData, error: updateError } = await supabase
+        .from("users")
+        .update({ name: userName })
+        .eq("clerk_id", clerkUser.id)
+        .select()
+        .single();
+      data = updatedData;
+      error = updateError;
+    } else {
+      // 새로 생성
+      const { data: insertedData, error: insertError } = await supabase
+        .from("users")
+        .insert({
+          clerk_id: clerkUser.id,
+          name: userName,
+        })
+        .select()
+        .single();
+      data = insertedData;
+      error = insertError;
+    }
 
     if (error) {
       console.error("Supabase sync error:", error);
+      console.error("Error details:", JSON.stringify(error, null, 2));
       return NextResponse.json(
         { error: "Failed to sync user", details: error.message },
         { status: 500 }

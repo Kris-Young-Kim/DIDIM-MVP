@@ -139,6 +139,8 @@ Output JSON format:
   "search_tags": ["string", ...],
   "reasoning": "string"
 }
+`;
+}
 
 const DOMAIN_FALLBACK_META: Record<
   string,
@@ -204,6 +206,3 @@ function buildFallbackAnalysis(data: AssessmentData): AIAnalysisResult {
     reasoning: `${meta.label} 영역 응답을 기반으로 기본 추천을 제공합니다. Gemini 분석에 실패하여 기본 규칙으로 산출된 결과입니다.`,
   };
 }
-`;
-}
-

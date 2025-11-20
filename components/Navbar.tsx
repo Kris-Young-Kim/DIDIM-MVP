@@ -1,7 +1,6 @@
 import { SignedOut, SignInButton, SignUpButton, SignedIn, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
-import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (
@@ -9,7 +8,7 @@ const Navbar = () => {
       <Link href="/" className="text-2xl font-bold">
         Didim
       </Link>
-      <div className="flex gap-4 items-center">
+      <nav aria-label="Global Navigation" className="flex gap-4 items-center">
         <SignedOut>
           <SignInButton mode="modal">
             <button className="cursor-pointer text-sm font-medium hover:text-primary transition-colors">
@@ -25,7 +24,7 @@ const Navbar = () => {
         <SignedIn>
           <UserButton />
         </SignedIn>
-      </div>
+      </nav>
     </header>
   );
 };

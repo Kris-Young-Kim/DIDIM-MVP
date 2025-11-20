@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { koKR } from "@clerk/localizations";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { SyncUserProvider } from "@/components/providers/sync-user-provider";
 import "./globals.css";
 
@@ -30,9 +31,16 @@ export default function RootLayout({
     <ClerkProvider localization={koKR}>
       <html lang="ko">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black focus:top-0 focus:left-0"
+          >
+            본문으로 건너뛰기
+          </a>
           <SyncUserProvider>
             <Navbar />
             {children}
+            <Footer />
           </SyncUserProvider>
         </body>
       </html>

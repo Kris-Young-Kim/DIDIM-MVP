@@ -22,7 +22,9 @@ export default function SensoryForm() {
         name="sensory.visual_impairment"
         render={({ field }) => (
           <FormItem className="space-y-3">
-            <FormLabel>시각 장애 정도가 어떻게 되시나요?</FormLabel>
+            <FormLabel className="text-foreground font-semibold">
+              시각 장애 정도가 어떻게 되시나요?
+            </FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
@@ -31,19 +33,19 @@ export default function SensoryForm() {
               >
                 <div className="flex items-center space-x-3 space-y-0">
                   <RadioGroupItem value="none" id="vis-none" />
-                  <Label htmlFor="vis-none" className="font-normal">
+                  <Label htmlFor="vis-none" className="font-normal text-foreground/80">
                     해당 없음 (불편함 없음)
                   </Label>
                 </div>
                 <div className="flex items-center space-x-3 space-y-0">
                   <RadioGroupItem value="low_vision" id="vis-low" />
-                  <Label htmlFor="vis-low" className="font-normal">
+                  <Label htmlFor="vis-low" className="font-normal text-foreground/80">
                     저시력 (확대기 등이 필요함)
                   </Label>
                 </div>
                 <div className="flex items-center space-x-3 space-y-0">
                   <RadioGroupItem value="blind" id="vis-blind" />
-                  <Label htmlFor="vis-blind" className="font-normal">
+                  <Label htmlFor="vis-blind" className="font-normal text-foreground/80">
                     전맹 (점자 또는 음성 지원 필요)
                   </Label>
                 </div>
@@ -54,14 +56,16 @@ export default function SensoryForm() {
         )}
       />
 
-      <div className="my-4" />
+      <div className="my-4 border-t border-dashed border-white/10" />
 
       <FormField
         control={control}
         name="sensory.hearing_impairment"
         render={({ field }) => (
           <FormItem className="space-y-3">
-            <FormLabel>청각 장애 정도가 어떻게 되시나요?</FormLabel>
+            <FormLabel className="text-foreground font-semibold">
+              청각 장애 정도가 어떻게 되시나요?
+            </FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
@@ -70,25 +74,25 @@ export default function SensoryForm() {
               >
                 <div className="flex items-center space-x-3 space-y-0">
                   <RadioGroupItem value="none" id="hear-none" />
-                  <Label htmlFor="hear-none" className="font-normal">
+                  <Label htmlFor="hear-none" className="font-normal text-foreground/80">
                     해당 없음
                   </Label>
                 </div>
                 <div className="flex items-center space-x-3 space-y-0">
                   <RadioGroupItem value="mild" id="hear-mild" />
-                  <Label htmlFor="hear-mild" className="font-normal">
+                  <Label htmlFor="hear-mild" className="font-normal text-foreground/80">
                     경증/난청 (증폭기 필요)
                   </Label>
                 </div>
                 <div className="flex items-center space-x-3 space-y-0">
                   <RadioGroupItem value="severe" id="hear-severe" />
-                  <Label htmlFor="hear-severe" className="font-normal">
+                  <Label htmlFor="hear-severe" className="font-normal text-foreground/80">
                     중증 (수어 또는 필담 필요)
                   </Label>
                 </div>
                 <div className="flex items-center space-x-3 space-y-0">
                   <RadioGroupItem value="deaf" id="hear-deaf" />
-                  <Label htmlFor="hear-deaf" className="font-normal">
+                  <Label htmlFor="hear-deaf" className="font-normal text-foreground/80">
                     전농 (소리를 전혀 듣지 못함)
                   </Label>
                 </div>

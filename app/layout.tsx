@@ -1,21 +1,15 @@
+/**
+ * @file app/layout.tsx
+ * @description 글로벌 레이아웃. ClerkProvider + SyncUserProvider로 인증을 구성하고,
+ * 다크 네이비 테마를 body에 적용한다.
+ */
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { koKR } from "@clerk/localizations";
-import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SyncUserProvider } from "@/components/providers/sync-user-provider";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Didim - 유니버설 보조기기 매칭",
@@ -29,17 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider localization={koKR}>
-      <html lang="ko">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <html lang="ko" className="bg-background text-foreground">
+        <body className="antialiased bg-background text-foreground min-h-screen">
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-white focus:text-black focus:top-0 focus:left-0"
+            className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-primary focus:text-primary-foreground focus:top-0 focus:left-0"
           >
             본문으로 건너뛰기
           </a>
           <SyncUserProvider>
             <Navbar />
-            {children}
+            <main id="main-content">{children}</main>
             <Footer />
           </SyncUserProvider>
         </body>

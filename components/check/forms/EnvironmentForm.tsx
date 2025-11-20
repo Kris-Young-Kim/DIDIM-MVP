@@ -23,11 +23,14 @@ export default function EnvironmentForm() {
           name="common.age"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>사용자 연령 (만 나이)</FormLabel>
+              <FormLabel className="text-foreground font-semibold">
+                사용자 연령 (만 나이)
+              </FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   placeholder="예: 65"
+                  className="bg-background/60 border-white/20 text-white placeholder:text-foreground/50"
                   {...field}
                   onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : "")}
                 />
@@ -42,9 +45,15 @@ export default function EnvironmentForm() {
           name="common.residence"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>거주 지역 (시/군/구)</FormLabel>
+              <FormLabel className="text-foreground font-semibold">
+                거주 지역 (시/군/구)
+              </FormLabel>
               <FormControl>
-                <Input placeholder="예: 서울시 강남구" {...field} />
+                <Input
+                  placeholder="예: 서울시 강남구"
+                  className="bg-background/60 border-white/20 text-white placeholder:text-foreground/50"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -52,18 +61,20 @@ export default function EnvironmentForm() {
         />
       </div>
 
-      <div className="my-4" />
+      <div className="my-4 border-t border-dashed border-white/10" />
 
-      <FormField
+        <FormField
         control={control}
         name="common.goal_description"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>보조기기를 통해 해결하고 싶은 어려움이나 목표</FormLabel>
+              <FormLabel className="text-foreground font-semibold">
+                보조기기를 통해 해결하고 싶은 어려움이나 목표
+              </FormLabel>
             <FormControl>
               <Textarea
                 placeholder="예: 혼자서 식사를 하고 싶어요. / 휠체어에서 침대로 이동하는 것이 너무 힘들어요."
-                className="min-h-[120px]"
+                  className="min-h-[120px] bg-background/60 border-white/20 text-white placeholder:text-foreground/50"
                 {...field}
               />
             </FormControl>

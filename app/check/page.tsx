@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm, FormProvider, SubmitHandler, FieldErrors } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@clerk/nextjs"; // Import useAuth
 import StepNavigator from "@/components/StepNavigator";
-import DomainSelector from "@/components/check/DomainSelector";
+import DomainSelector, { DOMAINS, type DomainId } from "@/components/check/DomainSelector";
 import SensoryForm from "@/components/check/forms/SensoryForm";
 import MobilityForm from "@/components/check/forms/MobilityForm";
 import ADLForm from "@/components/check/forms/ADLForm";
@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { AssessmentSchema, AssessmentData } from "@/lib/schemas/assessment";
 import { submitAssessment } from "@/actions/submit-assessment";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 
 export default function CheckPage() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -22,6 +22,29 @@ export default function CheckPage() {
   const router = useRouter();
   const { isSignedIn } = useAuth(); // Get auth status
   const steps = ["영역 선택", "상세 질문", "환경/목표"];
+  const domainLabelMap = useMemo(
+    () =>
+      DOMAINS.reduce<Record<DomainId, string>>((acc, domain) => {
+        acc[domain.id] = domain.label;
+        return acc;
+      }, {} as Record<DomainId, string>),
+    []
+  );
+  const domainFieldKeyMap = useMemo(
+    () =>
+      ({
+        sensory: "sensory",
+        mobility: "mobility",
+        adl: "adl",
+        communication: "communication",
+        positioning: "positioning",
+        vehicle: "vehicle",
+        computer: "computer",
+        leisure: "leisure",
+        environment: "environment",
+      }) as Record<DomainId, keyof AssessmentData | null>,
+    []
+  );
 
   const form = useForm<AssessmentData>({
     resolver: zodResolver(AssessmentSchema),
@@ -32,21 +55,46 @@ export default function CheckPage() {
         residence: "",
         goal_description: "",
       },
-      sensory: { visual_impairment: undefined, hearing_impairment: undefined },
-      mobility: { walking_ability: undefined, upper_limb_strength: undefined },
-      adl: { eating: undefined, dressing: undefined, bathing: undefined },
+      sensory: undefined,
+      mobility: undefined,
+      adl: undefined,
+      communication: undefined,
+      positioning: undefined,
+      vehicle: undefined,
+      computer: undefined,
+      leisure: undefined,
+      environment: undefined,
     },
     mode: "onChange",
   });
 
-  const selectedDomains = form.watch("selectedDomains");
+  const [selectedDomains, setSelectedDomains] = useState<DomainId[]>(() => form.getValues("selectedDomains") ?? []);
 
-  const handleDomainToggle = (domainId: string) => {
-    const current = form.getValues("selectedDomains") || [];
-    const next = current.includes(domainId)
-      ? current.filter((id) => id !== domainId)
-      : [...current, domainId];
-    form.setValue("selectedDomains", next, { shouldValidate: true });
+  const clearDomainValues = (domainId: DomainId) => {
+    const fieldKey = domainFieldKeyMap[domainId];
+    if (!fieldKey) return;
+    form.setValue(fieldKey, undefined as AssessmentData[typeof fieldKey], {
+      shouldDirty: false,
+      shouldTouch: false,
+      shouldValidate: false,
+    });
+    form.clearErrors(fieldKey);
+  };
+
+  const handleDomainToggle = (domainId: DomainId) => {
+    setSelectedDomains((prev) => {
+      const exists = prev.includes(domainId);
+      const next = exists ? prev.filter((id) => id !== domainId) : [...prev, domainId];
+      if (exists) {
+        clearDomainValues(domainId);
+      }
+      form.setValue("selectedDomains", next, { shouldValidate: true });
+      console.groupCollapsed("[Assessment] Domain Toggle");
+      console.log("toggled:", domainId);
+      console.log("next domains:", next);
+      console.groupEnd();
+      return next;
+    });
   };
 
   const handleNext = async () => {
@@ -57,10 +105,11 @@ export default function CheckPage() {
         window.scrollTo(0, 0);
       }
     } else if (currentStep === 2) {
-      const fieldsToValidate = selectedDomains.map(
-        (d) => d as keyof AssessmentData
-      );
-      const isValid = await form.trigger(fieldsToValidate);
+      const fieldsToValidate = selectedDomains
+        .map((domain) => domainFieldKeyMap[domain])
+        .filter((key): key is keyof AssessmentData => Boolean(key));
+      const isValid =
+        fieldsToValidate.length > 0 ? await form.trigger(fieldsToValidate) : true;
       if (isValid) {
         setCurrentStep(3);
         window.scrollTo(0, 0);
@@ -121,6 +170,36 @@ export default function CheckPage() {
     alert(`[입력 오류] ${errorMessage}`);
   };
 
+  const renderDomainForms = () => {
+    if (!selectedDomains.length) {
+      return (
+        <div className="p-6 border border-dashed border-white/20 rounded-xl text-foreground/70 bg-white/5">
+          선택한 영역이 없습니다. 이전 단계에서 영역을 선택해주세요.
+        </div>
+      );
+    }
+
+    return selectedDomains.map((domain) => {
+      switch (domain) {
+        case "sensory":
+          return <SensoryForm key="sensory" />;
+        case "mobility":
+          return <MobilityForm key="mobility" />;
+        case "adl":
+          return <ADLForm key="adl" />;
+        default:
+          return (
+            <div
+              key={domain}
+              className="p-6 border border-dashed border-white/20 rounded-xl text-foreground/70 bg-white/5"
+            >
+              &quot;{domainLabelMap[domain] ?? domain}&quot; 영역의 상세 질문은 준비 중입니다. (Phase 2)
+            </div>
+          );
+      }
+    });
+  };
+
   return (
     <FormProvider {...form}>
       <section className="min-h-screen bg-background py-12 text-foreground">
@@ -171,23 +250,26 @@ export default function CheckPage() {
                 <h2 className="text-2xl font-bold mb-6 text-white">
                   상세 상황을 알려주세요
                 </h2>
-                <div className="space-y-8">
-                  {selectedDomains.includes("sensory") && <SensoryForm />}
-                  {selectedDomains.includes("mobility") && <MobilityForm />}
-                  {selectedDomains.includes("adl") && <ADLForm />}
-                  
-                  {/* Placeholder for other domains */}
-                  {selectedDomains
-                    .filter((d) => !["sensory", "mobility", "adl"].includes(d))
-                    .map((d) => (
-                      <div
-                        key={d}
-                        className="p-6 border border-dashed border-white/20 rounded-xl text-foreground/70 text-center bg-white/5"
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {selectedDomains.length > 0 ? (
+                    selectedDomains.map((domain) => (
+                      <button
+                        key={`chip-${domain}`}
+                        type="button"
+                        onClick={() => handleDomainToggle(domain)}
+                        className="flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-sm text-foreground/80 hover:border-primary/60 hover:text-white transition"
                       >
-                        &quot;{d}&quot; 영역의 상세 질문은 준비 중입니다. (Phase 2)
-                      </div>
-                    ))}
+                        {domainLabelMap[domain] ?? domain}
+                        <X className="w-3 h-3" />
+                      </button>
+                    ))
+                  ) : (
+                    <span className="text-sm text-red-300">
+                      선택한 영역이 없습니다. (이전 단계로 돌아가 선택해주세요)
+                    </span>
+                  )}
                 </div>
+                <div className="space-y-8">{renderDomainForms()}</div>
               </div>
             )}
 
@@ -212,7 +294,7 @@ export default function CheckPage() {
             >
               이전
             </Button>
-
+            
             {currentStep < 3 ? (
               <Button
                 onClick={handleNext}

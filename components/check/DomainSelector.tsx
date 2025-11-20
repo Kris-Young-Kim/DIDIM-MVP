@@ -70,9 +70,11 @@ export const DOMAINS = [
   },
 ] as const;
 
+export type DomainId = (typeof DOMAINS)[number]["id"];
+
 interface DomainSelectorProps {
-  selectedDomains: string[];
-  onToggle: (domainId: string) => void;
+  selectedDomains: DomainId[];
+  onToggle: (domainId: DomainId) => void;
 }
 
 export default function DomainSelector({
@@ -87,6 +89,7 @@ export default function DomainSelector({
 
         return (
           <button
+            type="button"
             key={domain.id}
             onClick={() => onToggle(domain.id)}
             className={cn(

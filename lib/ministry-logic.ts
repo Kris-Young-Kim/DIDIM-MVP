@@ -1,3 +1,5 @@
+import { findBestProgramFromDB } from "@/actions/find-welfare-programs";
+
 export type UserProfile = {
   birthYear: number
   occupation: string // 'worker', 'job_seeker', 'student', 'none'
@@ -14,9 +16,21 @@ export type ProgramResult = {
   subsidyLimit: string
   selfPaymentRate: string
   color: string // Tailwind color class for badge
+  programId?: number | null // DB의 welfare_programs.id
 }
 
+/**
+ * 사용자 프로필에 맞는 최적의 복지 사업을 찾습니다.
+ * 
+ * @deprecated 이 함수는 하드코딩된 로직을 사용합니다. 
+ * 새로운 구현은 `findBestProgramFromDB`를 사용하세요.
+ * 
+ * @param profile - 사용자 프로필 정보
+ * @returns 가장 적합한 복지 사업 정보
+ */
 export function findBestProgram(profile: UserProfile): ProgramResult {
+  // 하위 호환성을 위해 기존 로직 유지
+  // 하지만 실제로는 DB 기반 함수를 사용하는 것을 권장
   const currentYear = new Date().getFullYear()
   const age = currentYear - profile.birthYear
   const currentMonth = new Date().getMonth() + 1 // 1-12
@@ -115,4 +129,14 @@ export function findBestProgram(profile: UserProfile): ProgramResult {
         }
       }
   }
+}
+
+/**
+ * DB에서 사용자 프로필에 맞는 최적의 복지 사업을 찾습니다.
+ * 
+ * @param profile - 사용자 프로필 정보
+ * @returns 가장 적합한 복지 사업 정보
+ */
+export async function findBestProgramAsync(profile: UserProfile): Promise<ProgramResult> {
+  return await findBestProgramFromDB(profile);
 }

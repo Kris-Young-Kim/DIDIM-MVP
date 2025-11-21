@@ -2,6 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useUser } from "@clerk/nextjs";
+
+// 빌드 시 prerender 방지
+export const dynamic = 'force-dynamic';
 import { useClerkSupabaseClient } from "@/lib/supabase/clerk-client";
 import { Button } from "@/components/ui/button";
 import {

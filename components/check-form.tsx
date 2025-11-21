@@ -9,6 +9,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
+import { submitAssessment } from "@/actions/submit-assessment"
+import type { AssessmentData } from "@/lib/schemas/assessment"
+import { toast } from "sonner"
 
 export function CheckForm() {
   const router = useRouter()
@@ -30,21 +33,80 @@ export function CheckForm() {
   }
 
   const handleSubmit = async () => {
-    setLoading(true)
-
-    const profileData = {
-      birthYear: Number.parseInt(formData.birthYear) || 1990,
-      occupation: formData.occupation,
-      disabilityType: formData.disabilityType,
-      isVeteran: formData.isVeteran === "yes",
+    // 유효성 검사
+    if (!formData.birthYear || !formData.occupation || !formData.disabilityType) {
+      toast.error("모든 항목을 입력해주세요.")
+      return
     }
 
-    const encodedData = btoa(JSON.stringify(profileData))
+    setLoading(true)
 
-    // Simulate processing delay for effect
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      // submit-assessment가 기대하는 AssessmentData 형식으로 변환
+      const currentYear = new Date().getFullYear()
+      const age = currentYear - Number.parseInt(formData.birthYear)
 
-    router.push(`/report/analysis?data=${encodedData}`)
+      // disabilityType에 따라 selectedDomains 결정
+      const selectedDomains: string[] = []
+      if (formData.disabilityType === "physical" || formData.disabilityType === "visual") {
+        selectedDomains.push("mobility", "sensory")
+      } else if (formData.disabilityType === "hearing") {
+        selectedDomains.push("sensory", "communication")
+      } else if (formData.disabilityType === "developmental") {
+        selectedDomains.push("communication", "adl")
+      } else if (formData.disabilityType === "elderly") {
+        selectedDomains.push("adl", "mobility")
+      } else {
+        selectedDomains.push("mobility") // 기본값
+      }
+
+      // AssessmentData 구성 (간단한 버전 - 필수 필드만)
+      const assessmentData: AssessmentData = {
+        selectedDomains,
+        // 기본값으로 도메인별 데이터 채우기
+        mobility: {
+          walking_ability: "independent",
+          upper_limb_strength: "normal",
+        },
+        sensory: {
+          visual_impairment: formData.disabilityType === "visual" ? "low_vision" : "none",
+          hearing_impairment: formData.disabilityType === "hearing" ? "mild" : "none",
+        },
+        adl: {
+          eating: "independent",
+          dressing: "independent",
+          bathing: "independent",
+        },
+        common: {
+          age,
+          residence: "서울", // 기본값, 나중에 입력받을 수 있음
+          goal_description: "일상생활에 필요한 보조기기를 지원받고 싶습니다.",
+        },
+      }
+
+      console.log("[CheckForm] Submitting assessment:", assessmentData)
+
+      // submit-assessment Server Action 호출
+      const result = await submitAssessment(assessmentData)
+
+      console.log("[CheckForm] Assessment result:", result)
+
+      // 성공 시 result/[id]로 이동
+      if (result.logId) {
+        toast.success("분석이 완료되었습니다!")
+        router.push(`/result/${result.logId}`)
+      } else {
+        throw new Error("분석 결과 ID를 받지 못했습니다.")
+      }
+    } catch (error) {
+      console.error("[CheckForm] Submit error:", error)
+      toast.error(
+        error instanceof Error 
+          ? error.message 
+          : "분석 중 오류가 발생했습니다. 다시 시도해주세요."
+      )
+      setLoading(false)
+    }
   }
 
   return (

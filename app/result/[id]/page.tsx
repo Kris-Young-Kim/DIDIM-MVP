@@ -99,7 +99,7 @@ export default async function ResultPage(props: PageProps) {
                         {product.domain} / {product.category}
                       </div>
                     </div>
-                    <h3 className="font-bold text-lg mb-2 group-hover:text-[#6c47ff] transition-colors">
+                    <h3 className="font-bold text-lg mb-2 text-gray-900 group-hover:text-[#6c47ff] transition-colors">
                       {product.name}
                     </h3>
                     <p className="text-gray-500 text-sm mb-4 line-clamp-2 h-10">

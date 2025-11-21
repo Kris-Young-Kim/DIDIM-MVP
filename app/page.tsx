@@ -2,6 +2,7 @@ import { SiteHeader } from "@/components/site-header"
 import { HeroSection } from "@/components/hero-section"
 import { FeatureGrid } from "@/components/feature-grid"
 import { TrustSection } from "@/components/trust-section"
+import { ProductShowcase } from "@/components/product-showcase"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
@@ -12,6 +13,7 @@ export default function Home() {
         <HeroSection />
         <TrustSection />
         <FeatureGrid />
+        <ProductShowcase />
       </main>
       <Footer />
     </div>

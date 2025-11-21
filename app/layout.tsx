@@ -1,8 +1,10 @@
 import type React from "react"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
+import { ClerkProvider } from "@/components/providers/clerk-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+import { SyncUserProvider } from "@/components/providers/sync-user-provider"
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -26,13 +28,17 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased dark bg-black text-white`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          {children}
-          <Toaster />
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="ko" suppressHydrationWarning>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased dark bg-black text-white`}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <SyncUserProvider>
+              {children}
+            </SyncUserProvider>
+            <Toaster />
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

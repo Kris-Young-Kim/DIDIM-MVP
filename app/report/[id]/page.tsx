@@ -3,7 +3,7 @@ import { SiteHeader } from "@/components/site-header"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ArrowLeft, CheckCircle, AlertCircle, ShoppingCart } from "lucide-react"
-import { findBestProgram, type UserProfile } from "@/lib/ministry-logic"
+import { findBestProgramAsync, type UserProfile } from "@/lib/ministry-logic"
 import { FormDownloader } from "@/components/form-downloader"
 import { ProductRecommendation } from "@/components/product-recommendation"
 
@@ -37,7 +37,7 @@ export default async function ReportPage({
     }
   }
 
-  const result = findBestProgram(profile)
+  const result = await findBestProgramAsync(profile)
   const currentYear = new Date().getFullYear()
   const age = currentYear - profile.birthYear
 

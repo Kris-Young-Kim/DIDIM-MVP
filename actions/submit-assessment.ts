@@ -34,7 +34,7 @@ export async function submitAssessment(data: AssessmentData) {
           generationConfig: { responseMimeType: "application/json" },
         });
 
-        const prompt = createPrompt(data);
+        const prompt = await createPrompt(data);
         const result = await model.generateContent(prompt);
         const response = result.response;
         const text = response.text();
@@ -218,27 +218,57 @@ function parseGeminiResponse(text: string): AIAnalysisResult {
   }
 }
 
-function createPrompt(data: AssessmentData): string {
+async function createPrompt(data: AssessmentData): Promise<string> {
+  // welfare_programs 정보를 가져와서 프롬프트에 포함
+  const supabase = getServiceRoleClient();
+  const { data: welfarePrograms } = await supabase
+    .from("welfare_programs")
+    .select("ministry, program_name, target_criteria")
+    .order("id", { ascending: true });
+
+  const programsInfo = welfarePrograms
+    ?.map((p) => {
+      const criteria = p.target_criteria as {
+        occupation?: string[] | null;
+        disability_types?: string[] | null;
+        priority?: number;
+      };
+      return `- ${p.ministry} ${p.program_name} (직업: ${criteria.occupation?.join(", ") || "제한없음"}, 장애유형: ${criteria.disability_types?.join(", ") || "제한없음"}, 우선순위: ${criteria.priority || "N/A"})`;
+    })
+    .join("\n") || "복지 사업 정보를 불러올 수 없습니다.";
+
   return `
-You are an expert Assistive Technology Professional (ATP). 
+You are an expert Assistive Technology Professional (ATP) specializing in Korean government welfare programs for assistive devices.
 Analyze the user's assessment data and recommend the most suitable assistive technology category.
 
 Context:
 - Domains: sensory (vision/hearing), mobility (walking/wheelchair), adl (eating/bathing), communication, positioning, vehicle, computer, leisure, environment.
 - User Data: ${JSON.stringify(data, null, 2)}
 
+Available Korean Government Welfare Programs (9 ministries):
+${programsInfo}
+
+Priority Rules (Ministry Map Logic):
+1. 국가보훈부 (Veteran): Highest priority if user is a veteran (국가유공자)
+2. 고용노동부 (Worker): Highest priority for workers with disabilities (highest subsidy limit: 15M-20M KRW)
+3. 교육부 (Student): For students with disabilities
+4. 과학기술정보통신부 (IT): Seasonal (May-June), for IT/communication devices
+5. 보건복지부 (General): Default for general disability support
+
 Task:
 1. Identify the primary 'target_domain' where the user needs the most help based on their answers.
 2. Recommend a specific 'recommended_category' (e.g., 'reading_magnifier', 'manual_wheelchair', 'universal_cuff'). Use English keys if possible, or best guess.
 3. Suggest 3-5 'search_tags' (Korean) to find relevant products (e.g., '시각장애', '확대기', '휠체어', '식사보조').
-4. Provide a brief 'reasoning' (Korean) for your recommendation.
+4. Consider which welfare program would be most suitable based on user profile (if available in assessment data).
+5. Provide a brief 'reasoning' (Korean) for your recommendation, including which ministry program might be applicable.
 
 Output JSON format:
 {
   "target_domain": "string",
   "recommended_category": "string",
   "search_tags": ["string", ...],
-  "reasoning": "string"
+  "reasoning": "string",
+  "suggested_ministry": "string (optional, e.g., '고용노동부', '보건복지부')"
 }
 `;
 }

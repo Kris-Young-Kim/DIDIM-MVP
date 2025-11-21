@@ -20,8 +20,8 @@
 - [x] **Assessment UI - 도메인별 폼:** `components/check/forms/`에 ADLForm, SensoryForm, MobilityForm, EnvironmentForm 등 구현 완료
 - [x] **Assessment UI - 페이지:** `/check` 페이지 구현 완료
 - [x] **제품 매칭 로직:** 기본적인 제품 매칭 및 추천 로직 구현 완료 (`submit-assessment.ts`)
-- [ ] **Matching Logic:** 유저 상태에 따른 `welfare_programs` 쿼리 필터링 구현 (9개 부처별 자격 판별 로직)
-- [ ] **Gemini Prompting 최적화:** 9개 사업 분류 로직 프롬프트 튜닝 및 자격 판별 정확도 향상
+- [x] **Matching Logic:** 유저 상태에 따른 `welfare_programs` 쿼리 필터링 구현 (9개 부처별 자격 판별 로직) - `actions/find-welfare-programs.ts` 생성 및 `lib/ministry-logic.ts` 리팩토링 완료
+- [x] **Gemini Prompting 최적화:** 9개 사업 분류 로직 프롬프트 튜닝 및 자격 판별 정확도 향상 - `actions/submit-assessment.ts`의 `createPrompt` 함수에 welfare_programs 정보 포함 및 우선순위 로직 반영 완료
 
 ## Phase 3: Automation & Forms (Week 3)
 

@@ -80,18 +80,23 @@ export default async function ResultPage(props: PageProps) {
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                     {product.image_url ? (
+                     {product.image_url && !product.image_url.includes('placeholder') ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
                         <img 
                           src={product.image_url} 
                           alt={product.name} 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                            const fallback = target.nextElementSibling as HTMLElement;
+                            if (fallback) fallback.style.display = 'flex';
+                          }}
                         />
-                     ) : (
-                       <div className="absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-50">
-                         이미지 준비중
-                       </div>
-                     )}
+                     ) : null}
+                     <div className={`absolute inset-0 flex items-center justify-center text-gray-400 bg-gray-50 ${product.image_url && !product.image_url.includes('placeholder') ? 'hidden' : ''}`}>
+                       이미지 준비중
+                     </div>
                   </div>
                   <div className="p-5">
                     <div className="flex justify-between items-start mb-2">

@@ -1,72 +1,37 @@
-# 📝 Project Didim - 개발 작업 목록 (TODO)
-
-이 문서는 `AP.md`, `PRD.md`, `TRD.md` 등 기획 문서를 바탕으로 **프로젝트 디딤(Didim)**의 개발 단계를 정리한 로드맵입니다.
-
-## ✅ Phase 0: 프로젝트 초기 설정 및 DB 구축
-
-- [x] **환경 변수 설정 (`.env.local`)**
-  - [x] Clerk (인증), Supabase (DB), Gemini (AI) API 키 설정
-- [x] **데이터베이스 스키마 생성 (Supabase)**
-  - [x] `users` 테이블 생성 (Clerk 연동)
-  - [x] `products` 테이블 생성 (보조기기 정보)
-  - [x] `assessment_logs` 테이블 생성 (평가 기록)
-  - [x] `recommendations` 테이블 생성 (추천 결과)
-- [x] **라이브러리 설치 및 설정**
-  - [x] `@google/generative-ai` (Gemini SDK) 설치
-  - [x] shadcn/ui 기본 컴포넌트 설치 (`Button`, `Card`, `Form`, `Progress` 등)
-
-## 📦 Phase 1: 데이터 구축 (Data Construction)
-
-- [x] **제품 데이터 시딩 (Seeding)**
-  - [x] **9대 영역(감각, 이동 및 보행, 일상생활, 의사소통, 자세유지, 차량 개조, 컴퓨터 접근, 스포츠 및 여가 활동, 환경개조)**별 대표 제품 60개 등록 (보조기기 품목분류 고시 반영)
-  - [x] 각 제품별 `domain`, `category`, `tags` 정확히 입력
-  - [x] SQL 시드 파일 작성 (`supabase/migrations/seed_products.sql`)
-  - [x] DB에 데이터 입력 (Supabase Query)
-
-## 🎨 Phase 2: UI 구현 및 동적 설문 (Dynamic Form)
-
-- [x] **레이아웃 및 공통 컴포넌트**
-  - [x] Header (Navbar) 구현
-  - [x] Footer 구현
-  - [x] `StepNavigator` (진행 단계 표시바) 구현
-- [x] **[Step 1] 영역 선택 페이지 (`/check`)**
-  - [x] `DomainSelector` 컴포넌트: **9대 영역** 아이콘 그리드 형태의 다중 선택 UI
-- [x] **[Step 2] 상세 질문 폼 (조건부 렌더링)**
-  - [x] 선택된 영역에 따라 다른 질문 폼이 나오도록 구현
-  - [x] `ADLForm` (식사, 목욕, 착탈의 등)
-  - [x] `MobilityForm` (보행, 휠체어, 이승 등)
-  - [x] `SensoryForm` (시각, 청각)
-  - [x] `CommForm` (의사소통, PC접근) (미구현 - Placeholder 처리)
-  - [x] 기타 영역 통합 폼 (미구현 - Placeholder 처리)
-- [x] **[Step 3] 환경 및 목표 입력**
-  - [x] 사용 환경(집, 학교 등) 및 최종 목표 입력 폼
-- [x] **웹 접근성 개선 (GNB, LNB, FNB 등)**
-  - [x] Skip Navigation 링크 추가 (`layout.tsx`)
-  - [x] GNB, FNB, SNB 시멘틱 태그 및 ARIA 라벨 적용
-
-## 🧠 Phase 3: AI 매칭 및 백엔드 로직
-
-- [x] **Server Action 구현 (`actions/submit-assessment.ts`)**
-  - [x] 설문 데이터 수신 및 Gemini API 호출 구조 잡기
-- [x] **Gemini 프롬프트 엔지니어링**
-  - [x] 보조공학 전문가(ATP) 페르소나 설정
-  - [x] JSON 포맷으로 `target_domain`, `recommended_category`, `search_tags` 반환하도록 지시
-- [x] **매칭 알고리즘 구현**
-  - [x] AI 응답(태그, 카테고리)을 기반으로 Supabase `products` 테이블 검색/필터링 쿼리 작성
-- [x] **결과 저장 로직**
-  - [x] `assessment_logs` 및 `recommendations` 테이블에 분석 결과 저장
-
-## 📊 Phase 4: 결과 리포트 및 마무리
-
-- [x] **결과 페이지 구현 (`/result/[id]`)**
-  - [x] `SpecialistComment`: AI의 전문가 조언 말풍선 UI
-  - [x] `ProductCard`: 추천 제품 리스트 표시 (태그 강조)
-- [x] **클릭 트래킹 (수익화)**
-  - [x] 제품 구매 링크 클릭 시 `recommendations` 테이블 `is_clicked` 업데이트 (`track-click.ts`)
-- [x] **최종 테스트 및 배포**
-  - [x] 전체 사용자 흐름(Flow) 테스트
-  - [x] Vercel 배포 (Build successful)
-
 ---
 
-_최종 업데이트: 2025-11-20 (Phase 0 완료)_
+# 5. TODO.md
+
+```markdown
+# ✅ Action Plan
+
+## Phase 1: Foundation (Week 1)
+
+- [x] **DB 스키마 설계:** `docs/ai_studio_code.sql`에 전체 스키마 정의 완료 (users, welfare_programs, products, assessment_logs, recommendations, applications, product_welfare_relations)
+- [x] **기본 테이블 생성:** `supabase/migrations/create_didim_tables.sql`로 products, assessment_logs, recommendations 테이블 생성 완료
+- [x] **전체 스키마 적용:** `docs/ai_studio_code.sql`의 전체 스키마를 Supabase에 마이그레이션 적용 (welfare_programs, applications, product_welfare_relations 등) - 마이그레이션 파일 생성 완료 (`supabase/migrations/20251121201242_apply_full_schema.sql`)
+- [x] **Data Seeding:** 각 부처별 고시 리스트(엑셀) 확보 및 `welfare_programs` 테이블에 9개 부처 사업 정보 Import - 초기 데이터 구조 설계 및 스켈레톤 마이그레이션 생성 완료 (`supabase/migrations/20251121201243_seed_welfare_programs.sql`)
+- [x] **Auth:** Clerk 통합 완료, `users` 테이블에 `clerk_user_id`, `occupation`, `birth_year` 필드 정의 및 SyncUserProvider 구현
+
+## Phase 2: The Engine (Week 2)
+
+- [x] **Gemini AI 통합:** `actions/submit-assessment.ts`에 Gemini 1.5 Flash 모델 통합 및 분석 로직 구현 완료
+- [x] **Assessment UI - 기본 폼:** `components/check-form.tsx`로 기본 체크 폼 구현 (birthYear, occupation, disabilityType, isVeteran)
+- [x] **Assessment UI - 도메인별 폼:** `components/check/forms/`에 ADLForm, SensoryForm, MobilityForm, EnvironmentForm 등 구현 완료
+- [x] **Assessment UI - 페이지:** `/check` 페이지 구현 완료
+- [x] **제품 매칭 로직:** 기본적인 제품 매칭 및 추천 로직 구현 완료 (`submit-assessment.ts`)
+- [ ] **Matching Logic:** 유저 상태에 따른 `welfare_programs` 쿼리 필터링 구현 (9개 부처별 자격 판별 로직)
+- [ ] **Gemini Prompting 최적화:** 9개 사업 분류 로직 프롬프트 튜닝 및 자격 판별 정확도 향상
+
+## Phase 3: Automation & Forms (Week 3)
+
+- [ ] **n8n Setup:** 의료기기 정보포털 크롤링 워크플로우 생성
+- [ ] **Form Service:** Python(FastAPI)으로 간단한 HWP/PDF 필드 채우기 API 구축
+- [ ] **AI Writing:** "있어 보이는 행정 용어" 작문 프롬프트 튜닝 및 `applications` 테이블 연동
+- [ ] **서류 자동 생성 UI:** 신청서 작성 및 다운로드 기능 구현
+
+## Phase 4: Launch (Week 4)
+
+- [ ] **Beta Test:** 주변 지인(장애인, 노인 보호자) 대상 테스트
+- [ ] **Marketing:** "국비지원 신청서, AI가 대신 써드립니다" 문구로 커뮤니티 바이럴
+```

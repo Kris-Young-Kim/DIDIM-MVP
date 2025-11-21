@@ -1,43 +1,38 @@
-/**
- * @file app/layout.tsx
- * @description 글로벌 레이아웃. ClerkProvider + SyncUserProvider로 인증을 구성하고,
- * 다크 네이비 테마를 body에 적용한다.
- */
-import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
-import { koKR } from "@clerk/localizations";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { SyncUserProvider } from "@/components/providers/sync-user-provider";
-import "./globals.css";
+import type React from "react"
+import { Geist, Geist_Mono } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/sonner"
 
-export const metadata: Metadata = {
-  title: "Didim - 유니버설 보조기기 매칭",
-  description: "누구나 장벽 없이 일상을 누리도록 돕는 보조기기 매칭 서비스",
-};
+const geistSans = Geist({
+  variable: "--font-sans",
+  subsets: ["latin"],
+})
+
+const geistMono = Geist_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+})
+
+export const metadata = {
+  title: "DIDIM | AI Assistive Tech Platform",
+  description: "One-Stop FinTech for Assistive Technology Support",
+    generator: 'v0.app'
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <ClerkProvider localization={koKR}>
-      <html lang="ko" className="bg-background text-foreground">
-        <body className="antialiased bg-background text-foreground min-h-screen">
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-primary focus:text-primary-foreground focus:top-0 focus:left-0"
-          >
-            본문으로 건너뛰기
-          </a>
-          <SyncUserProvider>
-            <Navbar />
-            <main id="main-content">{children}</main>
-            <Footer />
-          </SyncUserProvider>
-        </body>
-      </html>
-    </ClerkProvider>
-  );
+    <html lang="ko" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased dark bg-black text-white`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          {children}
+          <Toaster />
+        </ThemeProvider>
+      </body>
+    </html>
+  )
 }

@@ -89,7 +89,19 @@ export default async function ReportPage({
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <FormDownloader programName={result.programName} />
+                    {result.programId ? (
+                      <FormDownloader 
+                        programId={result.programId} 
+                        programName={result.programName}
+                      />
+                    ) : (
+                      <Button
+                        disabled
+                        className="h-12 px-6 rounded-xl bg-gray-600 text-white text-base flex-1 cursor-not-allowed"
+                      >
+                        지원 대상이 아닙니다
+                      </Button>
+                    )}
                     <Button
                       variant="outline"
                       className="h-12 rounded-xl border-white/10 hover:bg-white/5 text-base hover:text-white bg-transparent"

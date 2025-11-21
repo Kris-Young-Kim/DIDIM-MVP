@@ -25,10 +25,10 @@
 
 ## Phase 3: Automation & Forms (Week 3)
 
-- [ ] **n8n Setup:** 의료기기 정보포털 크롤링 워크플로우 생성
-- [ ] **Form Service:** Python(FastAPI)으로 간단한 HWP/PDF 필드 채우기 API 구축
-- [ ] **AI Writing:** "있어 보이는 행정 용어" 작문 프롬프트 튜닝 및 `applications` 테이블 연동
-- [ ] **서류 자동 생성 UI:** 신청서 작성 및 다운로드 기능 구현
+- [ ] **n8n Setup:** 보조기기기 정보포털 크롤링 워크플로우 생성 (나중에 구현)
+- [x] **Form Service:** Python(FastAPI)으로 간단한 HWP/PDF 필드 채우기 API 구축 - Next.js API Route로 PDF 생성 구현 완료 (`app/api/generate-form/route.ts`, `pdf-lib` 사용)
+- [x] **AI Writing:** "있어 보이는 행정 용어" 작문 프롬프트 튜닝 및 `applications` 테이블 연동 - `actions/generate-application.ts` 생성 완료 (Gemini 1.5 Flash 사용, 행정 용어 스타일 작문)
+- [x] **서류 자동 생성 UI:** 신청서 작성 및 다운로드 기능 구현 - `components/form-downloader.tsx` 실제 기능 구현 및 `app/report/[id]/page.tsx` 연동 완료
 
 ## Phase 4: Launch (Week 4)
 

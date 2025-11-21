@@ -35,7 +35,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto">
             <Link href="/check" className="w-full sm:w-auto">
               <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-lg rounded-full bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all text-primary-foreground">
-                지금 무료로 진단받기
+                지금 무료로 체험하기
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
             </Link>
@@ -96,7 +96,7 @@ export default function Home() {
              />
              <StepCard 
                number="02"
-               title="상황 진단"
+               title="상황 입력"
                description="현재 겪고 있는 어려움과 목표를 입력합니다."
              />
              <StepCard 

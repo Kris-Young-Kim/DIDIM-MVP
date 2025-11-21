@@ -28,20 +28,14 @@ export async function POST() {
     // Supabase에 사용자 정보 동기화
     const supabase = getServiceRoleClient();
 
-    const userName =
-      clerkUser.fullName ||
-      clerkUser.username ||
-      clerkUser.emailAddresses[0]?.emailAddress ||
-      "Unknown";
-
-    // 스키마 캐시 문제를 피하기 위해 전체 컬럼 조회
+    // 스키마 캐시 문제를 피하기 위해 명시적으로 컬럼 지정
     const { data: existingUser, error: selectError } = await supabase
       .from("users")
-      .select("*")
+      .select("id, clerk_user_id, nickname, created_at")
       .eq("clerk_user_id", clerkUser.id)
       .maybeSingle();
 
-    // 조회 에러는 무시하고 계속 진행 (테이블이 없거나 스키마 문제일 수 있음)
+    // 조회 에러는 무시하고 계속 진행
     if (selectError) {
       console.warn("User select error (will try insert):", selectError);
     }
@@ -49,42 +43,61 @@ export async function POST() {
     let data;
     let error;
 
+    const userName =
+      clerkUser.fullName ||
+      clerkUser.username ||
+      clerkUser.emailAddresses[0]?.emailAddress ||
+      "Unknown";
+
+    // 실제 테이블 구조: id, clerk_user_id, nickname, created_at
+    const insertPayload: Record<string, any> = {
+      clerk_user_id: clerkUser.id,
+      nickname: userName,
+    };
+
     if (existingUser && existingUser.id) {
-      // 기존 사용자 업데이트
+      // 기존 사용자 업데이트 (nickname만 업데이트)
       console.log("Updating existing user:", existingUser.id);
       const { data: updatedData, error: updateError } = await supabase
         .from("users")
-        .update({ name: userName })
+        .update({ nickname: userName })
         .eq("id", existingUser.id)
-        .select()
+        .select("id, clerk_user_id, nickname, created_at")
         .single();
       data = updatedData;
       error = updateError;
     } else {
-      // 새로 생성 (또는 upsert 시도)
+      // 새로 생성
       console.log("Inserting new user with clerk_user_id:", clerkUser.id);
       
-      // 먼저 insert 시도
       const { data: insertedData, error: insertError } = await supabase
         .from("users")
-        .insert({
-          clerk_user_id: clerkUser.id,
-          name: userName,
-        })
-        .select()
+        .insert(insertPayload)
+        .select("id, clerk_user_id, nickname, created_at")
         .single();
       
-      // insert 실패 시 (중복 키 에러 등) update 시도
+      // insert 실패 시 (중복 키 에러 등) 기존 사용자 조회 후 업데이트
       if (insertError && insertError.code === "23505") {
-        console.log("Duplicate key error, trying update instead");
-        const { data: updatedData, error: updateError } = await supabase
+        console.log("Duplicate key error, fetching and updating existing user");
+        const { data: existingData, error: fetchError } = await supabase
           .from("users")
-          .update({ name: userName })
+          .select("id, clerk_user_id, nickname, created_at")
           .eq("clerk_user_id", clerkUser.id)
-          .select()
           .single();
-        data = updatedData;
-        error = updateError;
+        
+        if (existingData && !fetchError) {
+          const { data: updatedData, error: updateError } = await supabase
+            .from("users")
+            .update({ nickname: userName })
+            .eq("id", existingData.id)
+            .select("id, clerk_user_id, nickname, created_at")
+            .single();
+          data = updatedData;
+          error = updateError;
+        } else {
+          data = existingData;
+          error = fetchError;
+        }
       } else {
         data = insertedData;
         error = insertError;

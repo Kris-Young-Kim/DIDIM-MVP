@@ -5,7 +5,7 @@ export default function CheckPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <SiteHeader />
-      <main className="pt-32 pb-20 container mx-auto px-4">
+      <main id="main-content" aria-label="자격 평가 메인 콘텐츠" className="pt-32 pb-20 container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-10 text-center">
             <h1 className="text-3xl md:text-4xl font-bold mb-4">디딤 체크 (Didim Check)</h1>

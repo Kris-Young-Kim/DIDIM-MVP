@@ -5,6 +5,7 @@ import { ClerkProvider } from "@/components/providers/clerk-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { SyncUserProvider } from "@/components/providers/sync-user-provider"
+import { SkipLink } from "@/components/skip-link"
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
     <ClerkProvider>
     <html lang="ko" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased dark bg-black text-white`}>
+        <SkipLink />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <SyncUserProvider>
           {children}

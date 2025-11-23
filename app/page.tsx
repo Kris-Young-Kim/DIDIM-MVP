@@ -23,7 +23,7 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-blue-500/30">
       <SiteHeader />
-      <main>
+      <main id="main-content" aria-label="메인 콘텐츠">
         <HeroSection />
         <TrustSection />
         <FeatureGrid />
@@ -40,10 +40,11 @@ export default async function Home({ searchParams }: HomeProps) {
               </p>
               <Link 
                 href="/programs"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-gray-200 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black rounded-full font-semibold hover:bg-gray-200 transition-colors focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2"
+                aria-label="모든 지원사업 보기 페이지로 이동"
               >
                 모든 지원사업 보기
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </div>
           </div>

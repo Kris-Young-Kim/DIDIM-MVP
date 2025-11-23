@@ -1,12 +1,13 @@
 import Link from "next/link"
+import { Mail, Phone } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/10 bg-black py-12">
+    <footer role="contentinfo" className="border-t border-white/10 bg-black py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
+            <Link href="/" className="flex items-center gap-2 mb-4" aria-label="DIDIM 홈으로 이동">
               <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                 <div className="w-3 h-3 bg-black rounded-sm" />
               </div>
@@ -17,58 +18,81 @@ export function Footer() {
               <br />
               누구나 기술의 혜택을 누리는 세상.
             </p>
+            <div className="mt-4 space-y-2">
+              <a 
+                href="mailto:contact@didim.kr" 
+                className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
+                aria-label="이메일로 문의하기"
+              >
+                <Mail className="w-4 h-4" aria-hidden="true" />
+                <span>contact@didim.kr</span>
+              </a>
+              <a 
+                href="tel:1670-5529" 
+                className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
+                aria-label="전화로 문의하기"
+              >
+                <Phone className="w-4 h-4" aria-hidden="true" />
+                <span>1670-5529</span>
+              </a>
+            </div>
           </div>
-          <div>
+          <nav aria-label="서비스 링크">
             <h4 className="font-bold mb-4">서비스</h4>
             <ul className="space-y-2 text-sm text-gray-500">
               <li>
-                <Link href="#" className="hover:text-white">
+                <Link href="/programs" className="hover:text-white transition-colors">
                   지원사업 찾기
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white">
+                <Link href="/programs" className="hover:text-white transition-colors">
                   제품 둘러보기
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white">
+                <Link href="/#features" className="hover:text-white transition-colors">
                   성공 사례
                 </Link>
               </li>
             </ul>
-          </div>
-          <div>
+          </nav>
+          <nav aria-label="회사 정보">
             <h4 className="font-bold mb-4">회사</h4>
             <ul className="space-y-2 text-sm text-gray-500">
               <li>
-                <Link href="#" className="hover:text-white">
+                <Link href="/#features" className="hover:text-white transition-colors">
                   팀 소개
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white">
+                <Link href="/#features" className="hover:text-white transition-colors">
                   채용
                 </Link>
               </li>
               <li>
-                <Link href="#" className="hover:text-white">
+                <a 
+                  href="mailto:contact@didim.kr" 
+                  className="hover:text-white transition-colors"
+                >
                   문의하기
-                </Link>
+                </a>
               </li>
             </ul>
-          </div>
+          </nav>
         </div>
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600">
           <p>© 2025 DIDIM. All rights reserved.</p>
-          <div className="flex gap-4">
-            <Link href="#" className="hover:text-white">
-              이용약관
-            </Link>
-            <Link href="#" className="hover:text-white">
-              개인정보처리방침
-            </Link>
-          </div>
+          <nav aria-label="법적 정보">
+            <div className="flex gap-4">
+              <Link href="/terms" className="hover:text-white transition-colors">
+                이용약관
+              </Link>
+              <Link href="/privacy" className="hover:text-white transition-colors">
+                개인정보처리방침
+              </Link>
+            </div>
+          </nav>
         </div>
       </div>
     </footer>

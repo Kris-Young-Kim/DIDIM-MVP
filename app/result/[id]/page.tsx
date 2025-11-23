@@ -56,7 +56,7 @@ export default async function ResultPage(props: PageProps) {
   return (
     <div className="min-h-screen bg-black text-white">
       <SiteHeader />
-      <main className="pt-32 pb-20 container mx-auto px-4">
+      <main id="main-content" aria-label="평가 결과 메인 콘텐츠" className="pt-32 pb-20 container mx-auto px-4">
         <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
           <Link
             href="/check"
@@ -169,7 +169,7 @@ export default async function ResultPage(props: PageProps) {
                               /* eslint-disable-next-line @next/next/no-img-element */
                               <img 
                                 src={product.image_url} 
-                                alt={product.name} 
+                                alt={`${product.name} 제품 이미지${product.description ? ` - ${product.description}` : ""}`}
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
                                 onError={(e) => {
                                   const target = e.target as HTMLImageElement;
@@ -179,7 +179,10 @@ export default async function ResultPage(props: PageProps) {
                                 }}
                               />
                             ) : null}
-                            <div className={`absolute inset-0 flex items-center justify-center text-gray-500 bg-gray-900 ${product.image_url && !product.image_url.includes('placeholder') ? 'hidden' : ''}`}>
+                            <div 
+                              className={`absolute inset-0 flex items-center justify-center text-gray-500 bg-gray-900 ${product.image_url && !product.image_url.includes('placeholder') ? 'hidden' : ''}`}
+                              aria-label={`${product.name} 이미지 준비 중`}
+                            >
                               이미지 준비중
                             </div>
                           </div>

@@ -14,7 +14,7 @@ export default async function ChatPage() {
   return (
     <div className="min-h-screen bg-black text-white selection:bg-blue-500/30">
       <SiteHeader />
-      <main className="pt-16 pb-20">
+      <main id="main-content" aria-label="AI 챗봇 상담 메인 콘텐츠" className="pt-16 pb-20">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">

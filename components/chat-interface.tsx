@@ -77,19 +77,33 @@ export function ChatInterface() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-300px)] min-h-[600px] bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
+    <div 
+      className="flex flex-col h-[calc(100vh-300px)] min-h-[600px] bg-white/5 border border-white/10 rounded-2xl overflow-hidden"
+      role="region"
+      aria-label="AI 챗봇 대화 영역"
+    >
       {/* 메시지 영역 */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+      <div 
+        className="flex-1 overflow-y-auto p-6 space-y-4"
+        role="log"
+        aria-live="polite"
+        aria-atomic="false"
+        aria-label="채팅 메시지 목록"
+      >
         {messages.map((message) => (
           <div
             key={message.id}
             className={`flex gap-4 ${
               message.role === "user" ? "justify-end" : "justify-start"
             }`}
+            role={message.role === "user" ? "user-message" : "assistant-message"}
           >
             {message.role === "assistant" && (
-              <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <Bot className="w-5 h-5 text-blue-400" />
+              <div 
+                className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0"
+                aria-label="AI 챗봇"
+              >
+                <Bot className="w-5 h-5 text-blue-400" aria-hidden="true" />
               </div>
             )}
             <div
@@ -100,7 +114,10 @@ export function ChatInterface() {
               }`}
             >
               <p className="text-sm whitespace-pre-wrap">{message.content}</p>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs text-gray-500 mt-2" aria-label={`메시지 전송 시간: ${message.timestamp.toLocaleTimeString("ko-KR", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}`}>
                 {message.timestamp.toLocaleTimeString("ko-KR", {
                   hour: "2-digit",
                   minute: "2-digit",
@@ -108,37 +125,50 @@ export function ChatInterface() {
               </p>
             </div>
             {message.role === "user" && (
-              <div className="w-8 h-8 rounded-full bg-gray-500/20 flex items-center justify-center flex-shrink-0">
-                <User className="w-5 h-5 text-gray-400" />
+              <div 
+                className="w-8 h-8 rounded-full bg-gray-500/20 flex items-center justify-center flex-shrink-0"
+                aria-label="사용자"
+              >
+                <User className="w-5 h-5 text-gray-400" aria-hidden="true" />
               </div>
             )}
           </div>
         ))}
         
         {isLoading && (
-          <div className="flex gap-4 justify-start">
+          <div className="flex gap-4 justify-start" aria-live="polite" aria-label="답변 생성 중">
             <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-              <Bot className="w-5 h-5 text-blue-400" />
+              <Bot className="w-5 h-5 text-blue-400" aria-hidden="true" />
             </div>
             <div className="bg-white/5 rounded-2xl px-4 py-3">
-              <Loader2 className="w-5 h-5 text-blue-400 animate-spin" />
+              <Loader2 className="w-5 h-5 text-blue-400 animate-spin" aria-label="로딩 중" />
             </div>
           </div>
         )}
         
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} aria-hidden="true" />
       </div>
 
       {/* 입력 영역 */}
-      <form onSubmit={handleSubmit} className="p-4 border-t border-white/10">
+      <form 
+        onSubmit={handleSubmit} 
+        className="p-4 border-t border-white/10"
+        aria-label="메시지 입력 폼"
+      >
         <div className="flex gap-2">
+          <label htmlFor="chat-input" className="sr-only">
+            보조기기 지원사업이나 제품에 대해 질문하기
+          </label>
           <Input
+            id="chat-input"
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="보조기기 지원사업이나 제품에 대해 질문해보세요..."
-            className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-blue-500/50"
+            className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-gray-500 focus:border-blue-500/50 focus-visible:ring-2 focus-visible:ring-blue-500/50"
             disabled={isLoading}
+            aria-label="채팅 메시지 입력"
+            aria-describedby="chat-input-hint"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -149,16 +179,23 @@ export function ChatInterface() {
           <Button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6"
+            className="bg-blue-500 hover:bg-blue-600 text-white rounded-full px-6 focus-visible:ring-2 focus-visible:ring-blue-500/50"
+            aria-label={isLoading ? "메시지 전송 중" : "메시지 전송"}
           >
             {isLoading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
+                <span className="sr-only">전송 중</span>
+              </>
             ) : (
-              <Send className="w-5 h-5" />
+              <>
+                <Send className="w-5 h-5" aria-hidden="true" />
+                <span className="sr-only">전송</span>
+              </>
             )}
           </Button>
         </div>
-        <p className="text-xs text-gray-500 mt-2 text-center">
+        <p id="chat-input-hint" className="text-xs text-gray-500 mt-2 text-center">
           최신 지원사업 정보와 제품 정보를 제공합니다
         </p>
       </form>

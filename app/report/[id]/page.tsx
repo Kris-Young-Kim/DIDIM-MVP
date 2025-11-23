@@ -44,7 +44,7 @@ export default async function ReportPage({
   return (
     <div className="min-h-screen bg-black text-white">
       <SiteHeader />
-      <main className="pt-32 pb-20 container mx-auto px-4">
+      <main id="main-content" aria-label="신청서 생성 메인 콘텐츠" className="pt-32 pb-20 container mx-auto px-4">
         <div className="max-w-4xl mx-auto animate-in fade-in slide-in-from-bottom-8 duration-700">
           <Link
             href="/check"

@@ -7,7 +7,7 @@ export default function AdminPage() {
   return (
     <div className="min-h-screen bg-black text-white">
       <SiteHeader />
-      <main className="pt-32 pb-20 container mx-auto px-4">
+      <main id="main-content" aria-label="관리자 대시보드 메인 콘텐츠" className="pt-32 pb-20 container mx-auto px-4">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">관리자 대시보드</h1>

@@ -405,14 +405,14 @@ export async function ProductShowcase({ category = "all" }: ProductShowcaseProps
                     {product.image_url && !product.image_url.includes("placeholder") ? (
                       <Image
                         src={product.image_url}
-                        alt={product.name}
+                        alt={`${product.name} 제품 이미지${product.description ? ` - ${product.description}` : ""}`}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-300"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-500 bg-gray-900">
-                        <ShoppingCart className="w-12 h-12 opacity-20" />
+                      <div className="w-full h-full flex items-center justify-center text-gray-500 bg-gray-900" aria-label={`${product.name} 이미지 준비 중`}>
+                        <ShoppingCart className="w-12 h-12 opacity-20" aria-hidden="true" />
                       </div>
                     )}
                     

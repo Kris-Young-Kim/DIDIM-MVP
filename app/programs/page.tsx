@@ -23,7 +23,7 @@ export default async function ProgramsPage({ searchParams }: ProgramsPageProps) 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-blue-500/30">
       <SiteHeader />
-      <main className="pt-16">
+      <main id="main-content" aria-label="지원사업 안내 메인 콘텐츠" className="pt-16">
         {/* 헤더 섹션 */}
         <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-b border-white/10">
           <div className="container mx-auto px-4">

@@ -121,15 +121,24 @@ export function CheckForm() {
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="space-y-2">
               <h2 className="text-xl font-semibold">태어난 연도를 알려주세요.</h2>
-              <p className="text-sm text-gray-400">나이에 따라 지원 가능한 사업이 달라집니다.</p>
+              <p className="text-sm text-gray-400" id="birth-year-hint">나이에 따라 지원 가능한 사업이 달라집니다.</p>
             </div>
-            <Input
-              type="number"
-              placeholder="예: 1980"
-              className="bg-black/20 border-white/10 text-lg h-12"
-              value={formData.birthYear}
-              onChange={(e) => setFormData({ ...formData, birthYear: e.target.value })}
-            />
+            <div>
+              <label htmlFor="birth-year" className="sr-only">
+                태어난 연도
+              </label>
+              <Input
+                id="birth-year"
+                type="number"
+                placeholder="예: 1980"
+                className="bg-black/20 border-white/10 text-lg h-12 focus-visible:ring-2 focus-visible:ring-blue-500/50"
+                value={formData.birthYear}
+                onChange={(e) => setFormData({ ...formData, birthYear: e.target.value })}
+                aria-label="태어난 연도 입력"
+                aria-describedby="birth-year-hint"
+                aria-required="true"
+              />
+            </div>
           </div>
         )}
 
@@ -137,12 +146,15 @@ export function CheckForm() {
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="space-y-2">
               <h2 className="text-xl font-semibold">현재 직업 상태는 어떠신가요?</h2>
-              <p className="text-sm text-gray-400">고용노동부 지원 사업 대상인지 확인합니다.</p>
+              <p className="text-sm text-gray-400" id="occupation-hint">고용노동부 지원 사업 대상인지 확인합니다.</p>
             </div>
             <RadioGroup
               value={formData.occupation}
               onValueChange={(val) => setFormData({ ...formData, occupation: val })}
               className="grid grid-cols-1 gap-3"
+              aria-label="직업 상태 선택"
+              aria-describedby="occupation-hint"
+              aria-required="true"
             >
               {[
                 { value: "worker", label: "직장인 / 사업주", desc: "4대보험 가입 또는 사업자등록증 보유" },
@@ -169,24 +181,35 @@ export function CheckForm() {
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="space-y-2">
               <h2 className="text-xl font-semibold">장애 유형을 선택해주세요.</h2>
-              <p className="text-sm text-gray-400">유형에 따라 지원되는 품목이 다릅니다.</p>
+              <p className="text-sm text-gray-400" id="disability-type-hint">유형에 따라 지원되는 품목이 다릅니다.</p>
             </div>
-            <Select
-              value={formData.disabilityType}
-              onValueChange={(val) => setFormData({ ...formData, disabilityType: val })}
-            >
-              <SelectTrigger className="bg-black/20 border-white/10 h-12 text-lg">
-                <SelectValue placeholder="유형 선택" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="physical">지체/뇌병변 장애</SelectItem>
-                <SelectItem value="visual">시각 장애</SelectItem>
-                <SelectItem value="hearing">청각/언어 장애</SelectItem>
-                <SelectItem value="developmental">발달 장애</SelectItem>
-                <SelectItem value="elderly">노인성 질환 (장기요양등급)</SelectItem>
-                <SelectItem value="none">장애 등록 안함</SelectItem>
-              </SelectContent>
-            </Select>
+            <div>
+              <label htmlFor="disability-type" className="sr-only">
+                장애 유형 선택
+              </label>
+              <Select
+                value={formData.disabilityType}
+                onValueChange={(val) => setFormData({ ...formData, disabilityType: val })}
+              >
+                <SelectTrigger 
+                  id="disability-type"
+                  className="bg-black/20 border-white/10 h-12 text-lg focus-visible:ring-2 focus-visible:ring-blue-500/50"
+                  aria-label="장애 유형 선택"
+                  aria-describedby="disability-type-hint"
+                  aria-required="true"
+                >
+                  <SelectValue placeholder="유형 선택" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="physical">지체/뇌병변 장애</SelectItem>
+                  <SelectItem value="visual">시각 장애</SelectItem>
+                  <SelectItem value="hearing">청각/언어 장애</SelectItem>
+                  <SelectItem value="developmental">발달 장애</SelectItem>
+                  <SelectItem value="elderly">노인성 질환 (장기요양등급)</SelectItem>
+                  <SelectItem value="none">장애 등록 안함</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         )}
 
@@ -194,12 +217,14 @@ export function CheckForm() {
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="space-y-2">
               <h2 className="text-xl font-semibold">국가유공자이신가요?</h2>
-              <p className="text-sm text-gray-400">보훈부 지원 대상인지 확인합니다.</p>
+              <p className="text-sm text-gray-400" id="veteran-hint">보훈부 지원 대상인지 확인합니다.</p>
             </div>
             <RadioGroup
               value={formData.isVeteran}
               onValueChange={(val) => setFormData({ ...formData, isVeteran: val })}
               className="grid grid-cols-2 gap-4"
+              aria-label="국가유공자 여부 선택"
+              aria-describedby="veteran-hint"
             >
               <div>
                 <RadioGroupItem value="yes" id="vet-yes" className="peer sr-only" />

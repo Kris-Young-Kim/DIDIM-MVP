@@ -16,7 +16,7 @@ export function HeroSection() {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100">
-          나랏돈 받는 보조기기, <br />
+          어려운 보조기기, <br />
           <span className="text-gradient-blue">디딤이 찾아드립니다.</span>
         </h1>
 

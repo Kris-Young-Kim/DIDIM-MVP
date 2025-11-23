@@ -64,6 +64,7 @@ repomix-output.xml
 docs/*.pdf
 docs/*.xls
 docs/*.xlsx
+docs_backup/
 
 # clerk configuration (can include secrets)
 /.clerk/

@@ -30,6 +30,27 @@
 - [x] **AI Writing:** "있어 보이는 행정 용어" 작문 프롬프트 튜닝 및 `applications` 테이블 연동 - `actions/generate-application.ts` 생성 완료 (Gemini 1.5 Flash 사용, 행정 용어 스타일 작문)
 - [x] **서류 자동 생성 UI:** 신청서 작성 및 다운로드 기능 구현 - `components/form-downloader.tsx` 실제 기능 구현 및 `app/report/[id]/page.tsx` 연동 완료
 
+## Phase 3.5: Product Showcase & Data Enhancement (Week 3-4)
+
+- [x] **홈페이지 제품 쇼케이스 추가:** `components/product-showcase.tsx` 생성 및 홈페이지 통합 완료 - 고용노동부 보조공학기기 지원사업 제품 표시
+- [x] **부처별 제품 쇼케이스 컴포넌트 생성:**
+  - `components/msit-product-showcase.tsx` - 과학기술정보통신부 정보통신보조기기 보급사업
+  - `components/mpva-product-showcase.tsx` - 국가보훈부 보철구 지원사업
+  - `components/moe-product-showcase.tsx` - 교육부 특수교육대상자 보조공학기기
+  - `components/mohw-product-showcase.tsx` - 보건복지부 3개 사업 통합 (장애인보조기기 교부/급여, 교부사업, 노인장기요양 복지용구)
+  - `components/moel-workplace-accident-showcase.tsx` - 고용노동부 산업재해보상보험 재활보조기구 보급사업
+- [x] **복지 사업 정보 상세화:** 중앙보조기기센터 정보 기반으로 각 부처별 사업 정보 상세 업데이트
+  - 지원율 정보 추가 (일반/저소득/차상위 등 세분화)
+  - 품목 수 및 카테고리 정보 추가
+  - 자격 기준 상세화 (나이 예외, 국가유공자 유형, 소득 수준 등)
+  - 지원 대상 그룹 명시 (사업주, 근로자, 공무원 등)
+- [x] **데이터베이스 마이그레이션 업데이트:** `supabase/migrations/20251121201243_seed_welfare_programs.sql`에 상세 정보 반영
+  - 고용노동부: 지원율 단계별 계산 로직, 차량용/이동보조/컴퓨터접근 등 품목 분류
+  - 과학기술정보통신부: 국가유공자 지원, 저소득 지원율, 장애유형별 품목 수
+  - 국가보훈부: 14개 국가유공자 유형, 51개 품목 분류
+  - 교육부: 학생 대상, 교육청별 상이 지원
+  - 보건복지부: 3개 사업별 상세 정보 (건강보험급여, 교부사업, 노인장기요양)
+
 ## Phase 4: Launch (Week 4)
 
 - [ ] **Beta Test:** 주변 지인(장애인, 노인 보호자) 대상 테스트
@@ -75,4 +96,35 @@
 
 - [x] **Phase 5: 미들웨어 보호 범위 확장**
   - `middleware.ts`의 `isProtectedRoute`에 `/report(.*)`, `/admin(.*)` 추가 완료
+
+## 📊 현재 상태 요약
+
+### 완료된 주요 기능
+
+1. ✅ **인증 및 사용자 관리**: Clerk 통합, Supabase 사용자 동기화
+2. ✅ **자격 평가 시스템**: Gemini AI 기반 복지 사업 매칭 엔진
+3. ✅ **제품 추천 시스템**: 사용자 프로필 기반 보조기기 추천
+4. ✅ **신청서 자동 생성**: AI 기반 행정 용어 신청서 작성 및 PDF 생성
+5. ✅ **제품 쇼케이스**: 홈페이지에 부처별 제품 전시 (6개 부처, 9개 사업)
+6. ✅ **복지 사업 정보 DB**: 5개 부처 9개 사업 상세 정보 구축
+
+### 데이터베이스 현황
+
+- **welfare_programs**: 9개 사업 정보 (상세 자격 기준, 지원율, 품목 분류 포함)
+- **products**: 보조기기 제품 정보 (n8n 크롤링 대비 준비 완료)
+- **assessment_logs**: 사용자 자격 평가 기록
+- **applications**: AI 생성 신청서 저장
+
+### UI/UX 현황
+
+- 홈페이지: 부처별 제품 쇼케이스 섹션 (6개 부처)
+- 자격 평가: `/check` 페이지 (도메인별 폼)
+- 결과 페이지: `/result/[id]` (복지 사업 매칭 + 제품 추천 + 신청서 생성)
+- 제품 필터링: 카테고리별 동적 필터링 기능
+
+### 다음 단계 (선택 사항)
+
+- [ ] n8n 워크플로우로 실제 제품 데이터 수집
+- [ ] Beta 테스트 진행
+- [ ] 마케팅 및 커뮤니티 바이럴
 ```

@@ -56,10 +56,10 @@ export function FormDownloader({ programId, programName, assessmentLogId }: Form
       const data = await response.json()
       setFileUrl(data.fileUrl)
 
-      setStatus("done")
-      toast.success("서류 생성이 완료되었습니다!", {
+    setStatus("done")
+    toast.success("서류 생성이 완료되었습니다!", {
         description: `${programName} 신청서가 준비되었습니다.`,
-      })
+    })
 
       // 3. 파일 다운로드
       if (data.fileUrl) {
@@ -79,38 +79,38 @@ export function FormDownloader({ programId, programName, assessmentLogId }: Form
 
   return (
     <div className="flex-1">
-      <Button
-        onClick={handleDownload}
+    <Button
+      onClick={handleDownload}
         disabled={status === "generating" || status === "generating-pdf"}
         className="h-12 px-6 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-base w-full"
-      >
-        {status === "generating" ? (
-          <>
-            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-            AI가 서류 작성 중...
-          </>
+    >
+      {status === "generating" ? (
+        <>
+          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+          AI가 서류 작성 중...
+        </>
         ) : status === "generating-pdf" ? (
           <>
             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
             PDF 생성 중...
           </>
-        ) : status === "done" ? (
-          <>
-            <FileText className="w-5 h-5 mr-2" />
-            작성 완료 (다시 받기)
-          </>
+      ) : status === "done" ? (
+        <>
+          <FileText className="w-5 h-5 mr-2" />
+          작성 완료 (다시 받기)
+        </>
         ) : status === "error" ? (
           <>
             <AlertCircle className="w-5 h-5 mr-2" />
             다시 시도
           </>
-        ) : (
-          <>
-            <Download className="w-5 h-5 mr-2" />
-            AI 신청서 자동 생성
-          </>
-        )}
-      </Button>
+      ) : (
+        <>
+          <Download className="w-5 h-5 mr-2" />
+          AI 신청서 자동 생성
+        </>
+      )}
+    </Button>
       {error && (
         <p className="mt-2 text-sm text-red-400">{error}</p>
       )}

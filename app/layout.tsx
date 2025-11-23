@@ -29,16 +29,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="ko" suppressHydrationWarning>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased dark bg-black text-white`}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+    <html lang="ko" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased dark bg-black text-white`}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <SyncUserProvider>
-              {children}
+          {children}
             </SyncUserProvider>
-            <Toaster />
-          </ThemeProvider>
-        </body>
-      </html>
+          <Toaster />
+        </ThemeProvider>
+      </body>
+    </html>
     </ClerkProvider>
   )
 }

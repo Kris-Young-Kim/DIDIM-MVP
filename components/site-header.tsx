@@ -17,7 +17,7 @@ export function SiteHeader() {
           <Link href="#features" className="hover:text-white transition-colors">
             기능 소개
           </Link>
-          <Link href="#programs" className="hover:text-white transition-colors">
+          <Link href="/programs" className="hover:text-white transition-colors">
             지원 사업
           </Link>
           <Link href="#pricing" className="hover:text-white transition-colors">

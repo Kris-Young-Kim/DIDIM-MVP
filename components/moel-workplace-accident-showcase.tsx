@@ -126,7 +126,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "팔의지",
       market_price: 980000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의지", "팔의지", "산재", "근로복지공단", "고용노동부"],
     },
     {
@@ -137,7 +137,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "팔의지",
       market_price: 5500000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의수", "전동", "산재", "근로복지공단", "고용노동부"],
     },
     // 다리의지
@@ -149,7 +149,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "다리의지",
       market_price: 2960000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의족", "다리의지", "산재", "근로복지공단", "고용노동부"],
     },
     {
@@ -160,7 +160,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "다리의지",
       market_price: 4576000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의족", "AI", "산재", "근로복지공단", "고용노동부"],
     },
     // 팔보조기
@@ -172,7 +172,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "팔보조기",
       market_price: 270000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보조기", "팔", "산재", "근로복지공단", "고용노동부"],
     },
     // 척추보조기
@@ -184,7 +184,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "척추보조기",
       market_price: 460000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보조기", "척추", "산재", "근로복지공단", "고용노동부"],
     },
     // 다리보조기
@@ -196,7 +196,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "다리보조기",
       market_price: 530000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보조기", "다리", "산재", "근로복지공단", "고용노동부"],
     },
     // 이동보조기기
@@ -208,7 +208,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "이동보조기기",
       market_price: 3934000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["휠체어", "이동", "산재", "근로복지공단", "고용노동부"],
     },
     {
@@ -219,7 +219,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "이동보조기기",
       market_price: 2090000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["휠체어", "전동", "산재", "근로복지공단", "고용노동부"],
     },
     // 그 밖의 보조기기
@@ -231,7 +231,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "그 밖의 보조기기",
       market_price: 2500000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["리프트", "이동", "산재", "근로복지공단", "고용노동부"],
     },
     {
@@ -242,7 +242,7 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
       category: "그 밖의 보조기기",
       market_price: 1449000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["욕창예방", "매트리스", "산재", "근로복지공단", "고용노동부"],
     },
   ];

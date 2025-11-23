@@ -123,7 +123,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "화면독서기",
       market_price: 1200000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["시각장애", "화면독서기", "스크린리더", "음성출력", "과학기술정보통신부"],
     },
     {
@@ -134,7 +134,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "화면확대모니터",
       market_price: 900000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["시각장애", "확대기", "모니터", "터치", "과학기술정보통신부"],
     },
     {
@@ -145,7 +145,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "텍스트음성변환장치",
       market_price: 594000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["시각장애", "TTS", "음성출력", "과학기술정보통신부"],
     },
     {
@@ -156,7 +156,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "점자학습기기",
       market_price: 850000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["시각장애", "점자", "학습", "과학기술정보통신부"],
     },
     {
@@ -167,7 +167,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "화면확대모니터",
       market_price: 1500000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["시각장애", "확대", "모니터", "저시력", "과학기술정보통신부"],
     },
     {
@@ -178,7 +178,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "화면확대소프트웨어",
       market_price: 350000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["시각장애", "확대", "소프트웨어", "과학기술정보통신부"],
     },
     // 청각·언어장애용 정보통신보조기기
@@ -190,7 +190,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "음성인식소프트웨어",
       market_price: 450000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["청각장애", "음성인식", "소프트웨어", "과학기술정보통신부"],
     },
     {
@@ -201,7 +201,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "음향중계시스템",
       market_price: 280000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["청각장애", "보청기", "음향중계", "과학기술정보통신부"],
     },
     // 지체·뇌병변용 정보통신보조기기
@@ -213,7 +213,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "안구추적장치",
       market_price: 3500000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["지체장애", "안구추적", "마우스", "과학기술정보통신부"],
     },
     {
@@ -224,7 +224,7 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "음성제어소프트웨어",
       market_price: 320000,
       purchase_link: "https://www.at4u.or.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["지체장애", "음성제어", "소프트웨어", "과학기술정보통신부"],
     },
   ];

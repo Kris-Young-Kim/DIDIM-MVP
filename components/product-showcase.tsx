@@ -116,7 +116,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "전동 조향식 휠체어",
       market_price: 5122500,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1651326659270-59bbb788199a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["휠체어", "전동", "고용노동부", "직무활동"],
     },
     {
@@ -127,7 +127,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "수동 휠체어 추진장치",
       market_price: 2800000,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1705422292909-db7db933526b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["휠체어", "추진장치", "이동보조"],
     },
     // 의사소통보조공학기기
@@ -139,7 +139,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "텍스트 음성 변환장치",
       market_price: 4149225,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1634944902853-3e977c2de8b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의사소통", "TTS", "음성출력", "고용노동부"],
     },
     {
@@ -150,7 +150,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "이미지 확대 시스템",
       market_price: 4518045,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1576210117723-cd06449a467d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["시각", "확대", "컴퓨터접근", "고용노동부"],
     },
     // 제어운반보조공학기기
@@ -162,7 +162,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "컴퓨터 포인팅 시스템",
       market_price: 1200000,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["컴퓨터", "입력장치", "고용노동부", "직무활동"],
     },
     {
@@ -173,7 +173,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "조작용 스틱",
       market_price: 45000,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1669698158680-522e6574c8ed?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["조작", "입력보조", "저비용"],
     },
     // 직무활동보조공학기기
@@ -185,7 +185,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "작업 및 사무용의자",
       market_price: 850000,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466158216-d1c0e8b1b0b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의자", "사무용", "고용노동부", "직무활동"],
     },
     {
@@ -196,7 +196,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "작업용 테이블",
       market_price: 650000,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["테이블", "작업용", "고용노동부"],
     },
     // 가구설비보조공학기기
@@ -208,7 +208,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "등지지대",
       market_price: 180000,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466158216-d1c0e8b1b0b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["자세유지", "등받이", "가구"],
     },
     // 신체측정보조공학기기
@@ -220,7 +220,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "욕창예방방석",
       market_price: 250000,
       purchase_link: "https://atkeadshop.co.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466158216-d1c0e8b1b0b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["욕창예방", "방석", "건강"],
     },
   ];

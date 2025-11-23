@@ -125,7 +125,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "학습보조기기",
       market_price: 450000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["학습", "확대", "독서", "저시력", "교육부", "특수교육"],
     },
     {
@@ -136,7 +136,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "학습보조기기",
       market_price: 180000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["학습", "수학", "음성출력", "시각장애", "교육부", "특수교육"],
     },
     {
@@ -147,7 +147,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "학습보조기기",
       market_price: 320000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["학습", "점자", "시각장애", "교육부", "특수교육"],
     },
     // 의사소통보조기기
@@ -159,7 +159,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "의사소통보조기기",
       market_price: 1200000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의사소통", "AAC", "언어장애", "교육부", "특수교육"],
     },
     {
@@ -170,7 +170,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "의사소통보조기기",
       market_price: 35000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의사소통", "그림", "언어장애", "교육부", "특수교육"],
     },
     // 컴퓨터접근기기
@@ -182,7 +182,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "컴퓨터접근기기",
       market_price: 350000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["컴퓨터", "확대", "소프트웨어", "저시력", "교육부", "특수교육"],
     },
     {
@@ -193,7 +193,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "컴퓨터접근기기",
       market_price: 385000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["컴퓨터", "화면독서", "음성출력", "시각장애", "교육부", "특수교육"],
     },
     {
@@ -204,7 +204,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "컴퓨터접근기기",
       market_price: 450000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["컴퓨터", "키보드", "입력장치", "지체장애", "교육부", "특수교육"],
     },
     // 감각보조기기
@@ -216,7 +216,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "감각보조기기",
       market_price: 850000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보청기", "FM", "청각장애", "교육부", "특수교육"],
     },
     {
@@ -227,7 +227,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "감각보조기기",
       market_price: 80000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["시계", "진동", "청각장애", "교육부", "특수교육"],
     },
     // 이동보조기기
@@ -239,7 +239,7 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "이동보조기기",
       market_price: 1200000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1646489099538-b89a9d9361a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["휠체어", "이동보조", "학교", "지체장애", "교육부", "특수교육"],
     },
   ];

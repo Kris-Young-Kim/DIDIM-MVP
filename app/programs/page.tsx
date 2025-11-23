@@ -6,6 +6,8 @@ import { MPVAProductShowcase } from "@/components/mpva-product-showcase"
 import { MOEProductShowcase } from "@/components/moe-product-showcase"
 import { MOHWProductShowcase } from "@/components/mohw-product-showcase"
 import { WorkplaceAccidentProductShowcase } from "@/components/moel-workplace-accident-showcase"
+import { LoginRequired } from "@/components/login-required"
+import { auth } from "@clerk/nextjs/server"
 import { Building2, Award, GraduationCap, Heart, Laptop, Shield } from "lucide-react"
 
 interface ProgramsPageProps {
@@ -15,6 +17,7 @@ interface ProgramsPageProps {
 export default async function ProgramsPage({ searchParams }: ProgramsPageProps) {
   const params = await searchParams;
   const category = params.category || "all";
+  const { userId } = await auth();
 
   return (
     <div className="min-h-screen bg-black text-white selection:bg-blue-500/30">
@@ -118,21 +121,27 @@ export default async function ProgramsPage({ searchParams }: ProgramsPageProps) 
         </section>
 
         {/* 제품 쇼케이스 섹션 */}
-        {/* 보건복지부 3개 사업 - 최상단 */}
-        <MOHWProductShowcase />
-        
-        {/* 고용노동부 */}
-        <ProductShowcase category={category} />
-        <WorkplaceAccidentProductShowcase />
-        
-        {/* 과학기술정보통신부 */}
-        <MSITProductShowcase />
-        
-        {/* 국가보훈부 */}
-        <MPVAProductShowcase />
-        
-        {/* 교육부 */}
-        <MOEProductShowcase />
+        {userId ? (
+          <>
+            {/* 보건복지부 3개 사업 - 최상단 */}
+            <MOHWProductShowcase />
+            
+            {/* 고용노동부 */}
+            <ProductShowcase category={category} />
+            <WorkplaceAccidentProductShowcase />
+            
+            {/* 과학기술정보통신부 */}
+            <MSITProductShowcase />
+            
+            {/* 국가보훈부 */}
+            <MPVAProductShowcase />
+            
+            {/* 교육부 */}
+            <MOEProductShowcase />
+          </>
+        ) : (
+          <LoginRequired />
+        )}
       </main>
       <Footer />
     </div>

@@ -122,7 +122,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "상지의지",
       market_price: 3500000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의수", "상지의지", "전동", "국가보훈부", "전액지원"],
     },
     {
@@ -133,7 +133,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "상지의지",
       market_price: 1200000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의수", "상지의지", "미용", "국가보훈부", "전액지원"],
     },
     {
@@ -144,7 +144,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "상지의지",
       market_price: 2800000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의수", "상지의지", "기능", "국가보훈부", "전액지원"],
     },
     // 하지의지
@@ -156,7 +156,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "하지의지",
       market_price: 8500000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의족", "하지의지", "전동", "국가보훈부", "전액지원"],
     },
     {
@@ -167,7 +167,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "하지의지",
       market_price: 4500000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의족", "하지의지", "기능", "국가보훈부", "전액지원"],
     },
     {
@@ -178,7 +178,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "하지의지",
       market_price: 3200000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의족", "하지의지", "스포츠", "국가보훈부", "전액지원"],
     },
     // 보조기
@@ -190,7 +190,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "상지보조기",
       market_price: 850000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보조기", "상지", "국가보훈부", "전액지원"],
     },
     {
@@ -201,7 +201,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "하지보조기",
       market_price: 1200000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보조기", "하지", "국가보훈부", "전액지원"],
     },
     // 이동보조기기
@@ -213,7 +213,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "휠체어",
       market_price: 2500000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["휠체어", "이동보조", "국가보훈부", "전액지원"],
     },
     {
@@ -224,7 +224,7 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "보행보조기",
       market_price: 650000,
       purchase_link: "https://www.mpva.go.kr/",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1581090122319-8fab9528eaaa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보행보조", "이동보조", "국가보훈부", "전액지원"],
     },
   ];

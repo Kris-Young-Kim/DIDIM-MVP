@@ -122,7 +122,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "생명활동 보조기기",
       market_price: 850000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["호흡", "산소", "생명활동", "보건복지부"],
     },
     {
@@ -133,7 +133,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "생명활동 보조기기",
       market_price: 450000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["호흡", "흡인", "생명활동", "보건복지부"],
     },
     // 치료 운동 보조기기
@@ -145,7 +145,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "치료 운동 보조기기",
       market_price: 320000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["재활", "운동", "치료", "보건복지부"],
     },
     // 의지 및 보조기
@@ -157,7 +157,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "의지 및 보조기",
       market_price: 650000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의지", "보조기", "상지", "보건복지부"],
     },
     {
@@ -168,7 +168,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "의지 및 보조기",
       market_price: 850000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["의지", "보조기", "하지", "보건복지부"],
     },
     // 이동 보조기기
@@ -180,7 +180,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "이동 보조기기",
       market_price: 850000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["휠체어", "이동", "보건복지부"],
     },
     {
@@ -191,7 +191,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "이동 보조기기",
       market_price: 180000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보행", "이동", "보건복지부"],
     },
     {
@@ -202,7 +202,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "이동 보조기기",
       market_price: 45000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["지팡이", "보행", "보건복지부"],
     },
     // 의사소통 보조기기
@@ -214,7 +214,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "의사소통 보조기기",
       market_price: 1500000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["보청기", "청각", "의사소통", "보건복지부"],
     },
     {
@@ -225,7 +225,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "의사소통 보조기기",
       market_price: 385000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["화면독서", "시각", "의사소통", "보건복지부"],
     },
     // 개인보호 보조기기
@@ -237,7 +237,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "개인보호 보조기기",
       market_price: 250000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["욕창예방", "방석", "개인보호", "보건복지부"],
     },
     // 가구 및 적응 보조기기
@@ -249,7 +249,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "가구 및 적응 보조기기",
       market_price: 85000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["안전", "욕실", "가구", "보건복지부"],
     },
     {
@@ -260,7 +260,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "가구 및 적응 보조기기",
       market_price: 180000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["욕실", "의자", "가구", "보건복지부"],
     },
     // 노인장기요양 복지용구
@@ -272,7 +272,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "가구 및 적응 보조기기",
       market_price: 120000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["침대", "안전", "노인", "보건복지부", "복지용구"],
     },
     {
@@ -283,7 +283,7 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
       category: "이동 보조기기",
       market_price: 1800000,
       purchase_link: "#",
-      image_url: null,
+      image_url: "https://images.unsplash.com/photo-1633466153506-a396b670565b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixlib=rb-4.1.0&q=80&w=1080",
       tags: ["리프트", "이동", "노인", "보건복지부", "복지용구"],
     },
   ];
@@ -573,8 +573,8 @@ export async function MOHWProductShowcase() {
               variant="outline"
               className="border-white/20 text-white hover:bg-white/10 rounded-full px-8"
             >
-              <Link href="https://www.mohw.go.kr/" target="_blank" rel="noopener noreferrer">
-                더 많은 정보 보기 (보건복지부)
+              <Link href="https://www.bokjiro.go.kr/ssis-tbu/twataa/wlfareInfo/moveTWAT52011M.do" target="_blank" rel="noopener noreferrer">
+                더 많은 정보 보기 (복지로)
                 <ExternalLink className="w-4 h-4 ml-2" />
               </Link>
             </Button>

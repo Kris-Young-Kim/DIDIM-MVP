@@ -80,7 +80,15 @@ async function getMSITProducts(
       return getMockMSITProducts(categoryFilter);
     }
 
-    return ictProducts.slice(0, limit);
+    // 수요가 많은 제품 우선순위 정렬 (화면독서기, 화면확대기, 보청기 순)
+    const priorityKeywords = ["화면독서기", "화면확대", "확대모니터", "보청기", "음향중계", "음성인식", "안구추적"];
+    const sortedProducts = [...ictProducts].sort((a: any, b: any) => {
+      const aScore = getMSITProductPriorityScore(a, priorityKeywords);
+      const bScore = getMSITProductPriorityScore(b, priorityKeywords);
+      return bScore - aScore;
+    });
+
+    return sortedProducts.slice(0, limit);
   } catch (error) {
     console.error("Error fetching MSIT products:", error);
     return getMockMSITProducts(categoryFilter);
@@ -109,6 +117,28 @@ async function isMSITProduct(product: Product): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+// MSIT 제품 우선순위 점수 계산
+function getMSITProductPriorityScore(product: any, priorityKeywords: string[]): number {
+  let score = 0;
+  const name = (product.name || "").toLowerCase();
+  const description = (product.description || "").toLowerCase();
+  const tags = (product.tags || []).join(" ").toLowerCase();
+  const category = (product.category || "").toLowerCase();
+  const allText = `${name} ${description} ${tags} ${category}`;
+  
+  priorityKeywords.forEach((keyword, index) => {
+    if (allText.includes(keyword.toLowerCase())) {
+      score += (priorityKeywords.length - index) * 10;
+    }
+  });
+  
+  if (allText.includes("화면독서기") || allText.includes("스크린리더")) score += 100;
+  if (allText.includes("화면확대") || allText.includes("확대모니터")) score += 80;
+  if (allText.includes("보청기")) score += 60;
+  
+  return score;
 }
 
 // Mock 데이터 (at4u.or.kr 스타일)
@@ -229,15 +259,37 @@ function getMockMSITProducts(categoryFilter: CategoryKey = "all"): Product[] {
     },
   ];
 
+  // 수요가 많은 제품 우선순위 (화면독서기, 화면확대기, 보청기 순)
+  const priorityProducts = [
+    "한소네6",
+    "24인치 화면확대터치모니터",
+    "강한손 확대 터치모니터 32인치",
+    "화면확대 소프트웨어",
+    "강한손 티티",
+    "보청기용 음향중계시스템",
+    "음성인식 소프트웨어",
+    "안구 추적 마우스",
+  ];
+
+  // 우선순위에 따라 정렬
+  const sortedProducts = [...allProducts].sort((a, b) => {
+    const aIndex = priorityProducts.indexOf(a.name);
+    const bIndex = priorityProducts.indexOf(b.name);
+    if (aIndex === -1 && bIndex === -1) return 0;
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
   // 카테고리 필터 적용
   if (categoryFilter === "all") {
-    return allProducts.slice(0, 8);
+    return sortedProducts.slice(0, 8);
   }
 
   const targetDomain = ICT_ASSISTIVE_CATEGORIES[categoryFilter].domain;
-  if (!targetDomain) return allProducts.slice(0, 8);
+  if (!targetDomain) return sortedProducts.slice(0, 8);
 
-  return allProducts
+  return sortedProducts
     .filter(p => p.domain === targetDomain)
     .slice(0, 8);
 }
@@ -263,7 +315,7 @@ export async function MSITProductShowcase() {
   const inSeason = isInSeason();
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10">
+    <section id="msit" className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10 scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">

@@ -81,7 +81,15 @@ async function getMOHWProducts(
       return getMockMOHWProducts(categoryFilter);
     }
 
-    return mohwProducts.slice(0, limit);
+    // 수요가 많은 제품 우선순위 정렬 (휠체어, 보청기, 욕창예방 방석, 목욕의자 순)
+    const priorityKeywords = ["휠체어", "보청기", "욕창예방", "방석", "욕의자", "목욕", "화면독서", "보행"];
+    const sortedProducts = [...mohwProducts].sort((a: any, b: any) => {
+      const aScore = getMOHWProductPriorityScore(a, priorityKeywords);
+      const bScore = getMOHWProductPriorityScore(b, priorityKeywords);
+      return bScore - aScore;
+    });
+
+    return sortedProducts.slice(0, limit);
   } catch (error) {
     console.error("Error fetching MOHW products:", error);
     return getMockMOHWProducts(categoryFilter);
@@ -108,6 +116,29 @@ async function isMOHWProduct(product: Product): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+// MOHW 제품 우선순위 점수 계산
+function getMOHWProductPriorityScore(product: any, priorityKeywords: string[]): number {
+  let score = 0;
+  const name = (product.name || "").toLowerCase();
+  const description = (product.description || "").toLowerCase();
+  const tags = (product.tags || []).join(" ").toLowerCase();
+  const category = (product.category || "").toLowerCase();
+  const allText = `${name} ${description} ${tags} ${category}`;
+  
+  priorityKeywords.forEach((keyword, index) => {
+    if (allText.includes(keyword.toLowerCase())) {
+      score += (priorityKeywords.length - index) * 10;
+    }
+  });
+  
+  if (allText.includes("휠체어")) score += 100;
+  if (allText.includes("보청기")) score += 80;
+  if (allText.includes("욕창예방") || allText.includes("방석")) score += 60;
+  if (allText.includes("욕의자") || allText.includes("목욕")) score += 50;
+  
+  return score;
 }
 
 // Mock 데이터 (보건복지부 고시 제2023-257호 기준)
@@ -288,15 +319,37 @@ function getMockMOHWProducts(categoryFilter: CategoryKey = "all"): Product[] {
     },
   ];
 
+  // 수요가 많은 제품 우선순위 (휠체어, 보청기, 욕창예방 방석, 목욕의자 순)
+  const priorityProducts = [
+    "수동 휠체어",
+    "보청기",
+    "욕창예방 방석",
+    "욕의자",
+    "화면 독서기",
+    "보행 보조차",
+    "욕실 안전 손잡이",
+    "침대 난간",
+  ];
+
+  // 우선순위에 따라 정렬
+  const sortedProducts = [...allProducts].sort((a, b) => {
+    const aIndex = priorityProducts.indexOf(a.name);
+    const bIndex = priorityProducts.indexOf(b.name);
+    if (aIndex === -1 && bIndex === -1) return 0;
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
   // 카테고리 필터 적용
   if (categoryFilter === "all") {
-    return allProducts.slice(0, 8);
+    return sortedProducts.slice(0, 8);
   }
 
   const targetDomain = MOHW_ASSISTIVE_CATEGORIES[categoryFilter].domain;
-  if (!targetDomain) return allProducts.slice(0, 8);
+  if (!targetDomain) return sortedProducts.slice(0, 8);
 
-  return allProducts
+  return sortedProducts
     .filter(p => p.domain === targetDomain)
     .slice(0, 8);
 }
@@ -324,7 +377,7 @@ export async function MOHWProductShowcase() {
   const hasProducts = products.length > 0;
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10">
+    <section id="mohw" className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10 scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">

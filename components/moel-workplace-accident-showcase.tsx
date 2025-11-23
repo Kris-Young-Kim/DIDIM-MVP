@@ -82,7 +82,15 @@ async function getWorkplaceAccidentProducts(
       return getMockWorkplaceAccidentProducts(categoryFilter);
     }
 
-    return workplaceAccidentProducts.slice(0, limit);
+    // 수요가 많은 제품 우선순위 정렬 (의족, 의수, 휠체어, 보조기 순)
+    const priorityKeywords = ["의족", "의수", "휠체어", "보조기", "리프트", "욕창예방"];
+    const sortedProducts = [...workplaceAccidentProducts].sort((a: any, b: any) => {
+      const aScore = getWorkplaceAccidentProductPriorityScore(a, priorityKeywords);
+      const bScore = getWorkplaceAccidentProductPriorityScore(b, priorityKeywords);
+      return bScore - aScore;
+    });
+
+    return sortedProducts.slice(0, limit);
   } catch (error) {
     console.error("Error fetching workplace accident products:", error);
     return getMockWorkplaceAccidentProducts(categoryFilter);
@@ -112,6 +120,29 @@ async function isWorkplaceAccidentProduct(product: Product): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+// 산재 제품 우선순위 점수 계산
+function getWorkplaceAccidentProductPriorityScore(product: any, priorityKeywords: string[]): number {
+  let score = 0;
+  const name = (product.name || "").toLowerCase();
+  const description = (product.description || "").toLowerCase();
+  const tags = (product.tags || []).join(" ").toLowerCase();
+  const category = (product.category || "").toLowerCase();
+  const allText = `${name} ${description} ${tags} ${category}`;
+  
+  priorityKeywords.forEach((keyword, index) => {
+    if (allText.includes(keyword.toLowerCase())) {
+      score += (priorityKeywords.length - index) * 10;
+    }
+  });
+  
+  if (allText.includes("의족")) score += 100;
+  if (allText.includes("의수")) score += 80;
+  if (allText.includes("휠체어")) score += 60;
+  if (allText.includes("보조기")) score += 40;
+  
+  return score;
 }
 
 // Mock 데이터 (중앙보조기기센터 기준)
@@ -247,15 +278,37 @@ function getMockWorkplaceAccidentProducts(categoryFilter: CategoryKey = "all"): 
     },
   ];
 
+  // 수요가 많은 제품 우선순위 (의족, 의수, 휠체어, 보조기 순)
+  const priorityProducts = [
+    "넓적다리 의지-실리콘형",
+    "넓적다리 의지(인공지능식)",
+    "아래팔 의지-기능형",
+    "근전전동의수",
+    "전동휠체어",
+    "수·전동휠체어-바퀴분리형",
+    "무릎-발목-발 보조기",
+    "등-허리-엉치 보조기",
+  ];
+
+  // 우선순위에 따라 정렬
+  const sortedProducts = [...allProducts].sort((a, b) => {
+    const aIndex = priorityProducts.indexOf(a.name);
+    const bIndex = priorityProducts.indexOf(b.name);
+    if (aIndex === -1 && bIndex === -1) return 0;
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
   // 카테고리 필터 적용
   if (categoryFilter === "all") {
-    return allProducts.slice(0, 8);
+    return sortedProducts.slice(0, 8);
   }
 
   const targetDomain = WORKPLACE_ACCIDENT_CATEGORIES[categoryFilter].domain;
-  if (!targetDomain) return allProducts.slice(0, 8);
+  if (!targetDomain) return sortedProducts.slice(0, 8);
 
-  return allProducts
+  return sortedProducts
     .filter(p => p.domain === targetDomain)
     .slice(0, 8);
 }
@@ -282,7 +335,7 @@ export async function WorkplaceAccidentProductShowcase() {
   const hasProducts = products.length > 0;
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10">
+    <section id="moel-workplace-accident" className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10 scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">

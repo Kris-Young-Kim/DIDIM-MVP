@@ -9,6 +9,7 @@ import { WorkplaceAccidentProductShowcase } from "@/components/moel-workplace-ac
 import { LoginRequired } from "@/components/login-required"
 import { auth } from "@clerk/nextjs/server"
 import { Building2, Award, GraduationCap, Heart, Laptop, Shield } from "lucide-react"
+import Link from "next/link"
 
 interface ProgramsPageProps {
   searchParams: Promise<{ category?: string }>;
@@ -38,7 +39,7 @@ export default async function ProgramsPage({ searchParams }: ProgramsPageProps) 
             {/* 부처별 카드 */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-12">
               {/* 고용노동부 */}
-              <div className="p-6 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-lg hover:border-blue-500/40 transition-all">
+              <Link href="#moel-general" className="p-6 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20 rounded-lg hover:border-blue-500/40 transition-all cursor-pointer">
                 <div className="flex items-center gap-3 mb-4">
                   <Building2 className="w-6 h-6 text-blue-400" />
                   <h3 className="text-xl font-bold">고용노동부</h3>
@@ -51,10 +52,10 @@ export default async function ProgramsPage({ searchParams }: ProgramsPageProps) 
                   <li>• 훈련보조공학기기 지원</li>
                   <li>• 산업재해보상보험 재활보조기구</li>
                 </ul>
-              </div>
+              </Link>
 
               {/* 과학기술정보통신부 */}
-              <div className="p-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-lg hover:border-purple-500/40 transition-all">
+              <Link href="#msit" className="p-6 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-lg hover:border-purple-500/40 transition-all cursor-pointer">
                 <div className="flex items-center gap-3 mb-4">
                   <Laptop className="w-6 h-6 text-purple-400" />
                   <h3 className="text-xl font-bold">과학기술정보통신부</h3>
@@ -67,10 +68,10 @@ export default async function ProgramsPage({ searchParams }: ProgramsPageProps) 
                   <li>• 시각/청각/지체장애 지원</li>
                   <li>• 최대 100만원 지원</li>
                 </ul>
-              </div>
+              </Link>
 
               {/* 국가보훈부 */}
-              <div className="p-6 bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border border-indigo-500/20 rounded-lg hover:border-indigo-500/40 transition-all">
+              <Link href="#mpva" className="p-6 bg-gradient-to-br from-indigo-500/10 to-indigo-600/5 border border-indigo-500/20 rounded-lg hover:border-indigo-500/40 transition-all cursor-pointer">
                 <div className="flex items-center gap-3 mb-4">
                   <Shield className="w-6 h-6 text-indigo-400" />
                   <h3 className="text-xl font-bold">국가보훈부</h3>
@@ -83,10 +84,10 @@ export default async function ProgramsPage({ searchParams }: ProgramsPageProps) 
                   <li>• 51개 품목 지원</li>
                   <li>• 전액 지원 (자부담 0%)</li>
                 </ul>
-              </div>
+              </Link>
 
               {/* 교육부 */}
-              <div className="p-6 bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-lg hover:border-green-500/40 transition-all">
+              <Link href="#moe" className="p-6 bg-gradient-to-br from-green-500/10 to-green-600/5 border border-green-500/20 rounded-lg hover:border-green-500/40 transition-all cursor-pointer">
                 <div className="flex items-center gap-3 mb-4">
                   <GraduationCap className="w-6 h-6 text-green-400" />
                   <h3 className="text-xl font-bold">교육부</h3>
@@ -99,10 +100,10 @@ export default async function ProgramsPage({ searchParams }: ProgramsPageProps) 
                   <li>• 학교를 통해 신청</li>
                   <li>• 교육청별 상이</li>
                 </ul>
-              </div>
+              </Link>
 
               {/* 보건복지부 */}
-              <div className="p-6 bg-gradient-to-br from-pink-500/10 to-pink-600/5 border border-pink-500/20 rounded-lg hover:border-pink-500/40 transition-all">
+              <Link href="#mohw" className="p-6 bg-gradient-to-br from-pink-500/10 to-pink-600/5 border border-pink-500/20 rounded-lg hover:border-pink-500/40 transition-all cursor-pointer">
                 <div className="flex items-center gap-3 mb-4">
                   <Heart className="w-6 h-6 text-pink-400" />
                   <h3 className="text-xl font-bold">보건복지부</h3>
@@ -115,7 +116,7 @@ export default async function ProgramsPage({ searchParams }: ProgramsPageProps) 
                   <li>• 장애인보조기기 교부사업</li>
                   <li>• 노인장기요양 복지용구</li>
                 </ul>
-              </div>
+              </Link>
             </div>
           </div>
         </section>

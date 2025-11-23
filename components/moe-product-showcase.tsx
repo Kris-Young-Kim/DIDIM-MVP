@@ -82,7 +82,15 @@ async function getMOEProducts(
       return getMockMOEProducts(categoryFilter);
     }
 
-    return educationProducts.slice(0, limit);
+    // 수요가 많은 제품 우선순위 정렬 (화면독서기, 확대기, 보청기, AAC 순)
+    const priorityKeywords = ["화면독서", "확대", "보청기", "AAC", "의사소통", "휠체어", "키보드"];
+    const sortedProducts = [...educationProducts].sort((a: any, b: any) => {
+      const aScore = getMOEProductPriorityScore(a, priorityKeywords);
+      const bScore = getMOEProductPriorityScore(b, priorityKeywords);
+      return bScore - aScore;
+    });
+
+    return sortedProducts.slice(0, limit);
   } catch (error) {
     console.error("Error fetching MOE products:", error);
     return getMockMOEProducts(categoryFilter);
@@ -111,6 +119,29 @@ async function isMOEProduct(product: Product): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+// MOE 제품 우선순위 점수 계산
+function getMOEProductPriorityScore(product: any, priorityKeywords: string[]): number {
+  let score = 0;
+  const name = (product.name || "").toLowerCase();
+  const description = (product.description || "").toLowerCase();
+  const tags = (product.tags || []).join(" ").toLowerCase();
+  const category = (product.category || "").toLowerCase();
+  const allText = `${name} ${description} ${tags} ${category}`;
+  
+  priorityKeywords.forEach((keyword, index) => {
+    if (allText.includes(keyword.toLowerCase())) {
+      score += (priorityKeywords.length - index) * 10;
+    }
+  });
+  
+  if (allText.includes("화면독서") || allText.includes("독서")) score += 100;
+  if (allText.includes("확대")) score += 80;
+  if (allText.includes("보청기")) score += 60;
+  if (allText.includes("aac") || allText.includes("의사소통")) score += 50;
+  
+  return score;
 }
 
 // Mock 데이터 (장애학생 교육용 보조공학 기준)
@@ -244,15 +275,37 @@ function getMockMOEProducts(categoryFilter: CategoryKey = "all"): Product[] {
     },
   ];
 
+  // 수요가 많은 제품 우선순위 (화면독서기, 확대기, 보청기, AAC 순)
+  const priorityProducts = [
+    "화면 독서 소프트웨어",
+    "전자 확대 독서기",
+    "화면 확대 소프트웨어",
+    "FM 보청기 시스템",
+    "AAC 의사소통기기",
+    "학교용 휠체어",
+    "대체 키보드",
+    "음성 출력 계산기",
+  ];
+
+  // 우선순위에 따라 정렬
+  const sortedProducts = [...allProducts].sort((a, b) => {
+    const aIndex = priorityProducts.indexOf(a.name);
+    const bIndex = priorityProducts.indexOf(b.name);
+    if (aIndex === -1 && bIndex === -1) return 0;
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
   // 카테고리 필터 적용
   if (categoryFilter === "all") {
-    return allProducts.slice(0, 8);
+    return sortedProducts.slice(0, 8);
   }
 
   const targetDomain = EDUCATION_ASSISTIVE_CATEGORIES[categoryFilter].domain;
-  if (!targetDomain) return allProducts.slice(0, 8);
+  if (!targetDomain) return sortedProducts.slice(0, 8);
 
-  return allProducts
+  return sortedProducts
     .filter(p => p.domain === targetDomain)
     .slice(0, 8);
 }
@@ -277,7 +330,7 @@ export async function MOEProductShowcase() {
   const hasProducts = products.length > 0;
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10">
+    <section id="moe" className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10 scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">

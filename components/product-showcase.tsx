@@ -76,11 +76,54 @@ async function getProducts(
       return getMockProducts(categoryFilter);
     }
 
-    return activeProducts;
+    // 수요가 많은 제품 우선순위 (태그/카테고리 기반)
+    const priorityKeywords = [
+      "휠체어", "전동", "이동",
+      "컴퓨터", "화면", "확대", "독서",
+      "의자", "테이블", "작업",
+      "보청기", "청각",
+      "욕창예방", "방석",
+    ];
+
+    // 우선순위에 따라 정렬
+    const sortedProducts = [...activeProducts].sort((a: any, b: any) => {
+      const aScore = getProductPriorityScore(a, priorityKeywords);
+      const bScore = getProductPriorityScore(b, priorityKeywords);
+      return bScore - aScore; // 높은 점수 우선
+    });
+
+    return sortedProducts;
   } catch (error) {
     console.error("Error fetching products:", error);
     return getMockProducts(categoryFilter);
   }
+}
+
+// 제품 우선순위 점수 계산 (수요가 많은 제품일수록 높은 점수)
+function getProductPriorityScore(product: any, priorityKeywords: string[]): number {
+  let score = 0;
+  const name = (product.name || "").toLowerCase();
+  const description = (product.description || "").toLowerCase();
+  const tags = (product.tags || []).join(" ").toLowerCase();
+  const category = (product.category || "").toLowerCase();
+  const domain = (product.domain || "").toLowerCase();
+  
+  const allText = `${name} ${description} ${tags} ${category} ${domain}`;
+  
+  priorityKeywords.forEach((keyword, index) => {
+    if (allText.includes(keyword.toLowerCase())) {
+      score += (priorityKeywords.length - index) * 10; // 앞쪽 키워드일수록 높은 점수
+    }
+  });
+  
+  // 휠체어는 최우선
+  if (allText.includes("휠체어")) score += 100;
+  // 컴퓨터 접근 기기는 높은 우선순위
+  if (allText.includes("컴퓨터") || allText.includes("화면")) score += 50;
+  // 작업용 의자/테이블도 높은 우선순위
+  if (allText.includes("의자") || allText.includes("테이블")) score += 40;
+  
+  return score;
 }
 
 // 고용노동부 사업 관련 제품인지 확인
@@ -225,13 +268,35 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
     },
   ];
 
+  // 수요가 많은 제품 우선순위 (휠체어, 컴퓨터 접근 기기, 작업용 의자/테이블 순)
+  const priorityProducts = [
+    "전동 조향식 휠체어",
+    "수동 휠체어 추진장치",
+    "이미지 확대 시스템",
+    "컴퓨터 포인팅 시스템",
+    "작업 및 사무용의자",
+    "작업용 테이블",
+    "텍스트 음성 변환장치",
+    "욕창예방방석",
+  ];
+
+  // 우선순위에 따라 정렬
+  const sortedProducts = [...allProducts].sort((a, b) => {
+    const aIndex = priorityProducts.indexOf(a.name);
+    const bIndex = priorityProducts.indexOf(b.name);
+    if (aIndex === -1 && bIndex === -1) return 0;
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
   // 카테고리 필터 적용
   if (categoryFilter === "all") {
-    return allProducts.slice(0, 8);
+    return sortedProducts.slice(0, 8);
   }
 
   const targetDomain = ASSISTIVE_TECH_CATEGORIES[categoryFilter].domain;
-  if (!targetDomain) return allProducts.slice(0, 8);
+  if (!targetDomain) return sortedProducts.slice(0, 8);
 
   const domainMapping: Record<string, string[]> = {
     body_support: ["body_support"],
@@ -243,7 +308,7 @@ function getMockProducts(categoryFilter: CategoryKey = "all"): Product[] {
   };
 
   const mappedDomains = domainMapping[targetDomain] || [];
-  return allProducts
+  return sortedProducts
     .filter(p => mappedDomains.some(d => p.domain?.includes(d)))
     .slice(0, 8);
 }
@@ -275,7 +340,7 @@ export async function ProductShowcase({ category = "all" }: ProductShowcaseProps
   const hasProducts = products.length > 0;
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10">
+    <section id="moel-general" className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10 scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">

@@ -79,7 +79,15 @@ async function getMPVAProducts(
       return getMockMPVAProducts(categoryFilter);
     }
 
-    return prostheticsProducts.slice(0, limit);
+    // 수요가 많은 제품 우선순위 정렬 (의족, 의수, 휠체어 순)
+    const priorityKeywords = ["의족", "의수", "휠체어", "보조기", "보행보조"];
+    const sortedProducts = [...prostheticsProducts].sort((a: any, b: any) => {
+      const aScore = getMPVAProductPriorityScore(a, priorityKeywords);
+      const bScore = getMPVAProductPriorityScore(b, priorityKeywords);
+      return bScore - aScore;
+    });
+
+    return sortedProducts.slice(0, limit);
   } catch (error) {
     console.error("Error fetching MPVA products:", error);
     return getMockMPVAProducts(categoryFilter);
@@ -108,6 +116,28 @@ async function isMPVAProduct(product: Product): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+// MPVA 제품 우선순위 점수 계산
+function getMPVAProductPriorityScore(product: any, priorityKeywords: string[]): number {
+  let score = 0;
+  const name = (product.name || "").toLowerCase();
+  const description = (product.description || "").toLowerCase();
+  const tags = (product.tags || []).join(" ").toLowerCase();
+  const category = (product.category || "").toLowerCase();
+  const allText = `${name} ${description} ${tags} ${category}`;
+  
+  priorityKeywords.forEach((keyword, index) => {
+    if (allText.includes(keyword.toLowerCase())) {
+      score += (priorityKeywords.length - index) * 10;
+    }
+  });
+  
+  if (allText.includes("의족")) score += 100;
+  if (allText.includes("의수")) score += 80;
+  if (allText.includes("휠체어")) score += 60;
+  
+  return score;
 }
 
 // Mock 데이터 (보철구 지급 실적 및 지급계획 기준)
@@ -229,15 +259,37 @@ function getMockMPVAProducts(categoryFilter: CategoryKey = "all"): Product[] {
     },
   ];
 
+  // 수요가 많은 제품 우선순위 (의족, 의수, 휠체어 순)
+  const priorityProducts = [
+    "기능 의족",
+    "전동 의족",
+    "기능 의수",
+    "전동 의수",
+    "휠체어 (보훈대상자용)",
+    "하지 보조기",
+    "상지 보조기",
+    "보행 보조기",
+  ];
+
+  // 우선순위에 따라 정렬
+  const sortedProducts = [...allProducts].sort((a, b) => {
+    const aIndex = priorityProducts.indexOf(a.name);
+    const bIndex = priorityProducts.indexOf(b.name);
+    if (aIndex === -1 && bIndex === -1) return 0;
+    if (aIndex === -1) return 1;
+    if (bIndex === -1) return -1;
+    return aIndex - bIndex;
+  });
+
   // 카테고리 필터 적용
   if (categoryFilter === "all") {
-    return allProducts.slice(0, 8);
+    return sortedProducts.slice(0, 8);
   }
 
   const targetDomain = PROSTHETICS_CATEGORIES[categoryFilter].domain;
-  if (!targetDomain) return allProducts.slice(0, 8);
+  if (!targetDomain) return sortedProducts.slice(0, 8);
 
-  return allProducts
+  return sortedProducts
     .filter(p => p.domain === targetDomain)
     .slice(0, 8);
 }
@@ -261,7 +313,7 @@ export async function MPVAProductShowcase() {
   const hasProducts = products.length > 0;
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10">
+    <section id="mpva" className="py-20 bg-gradient-to-b from-black via-gray-950 to-black border-t border-white/10 scroll-mt-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">

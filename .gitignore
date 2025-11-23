@@ -60,6 +60,11 @@ next-env.d.ts
 prompts/
 repomix-output.xml
 
+# Large PDF files (exceed GitHub 100MB limit)
+docs/*.pdf
+docs/*.xls
+docs/*.xlsx
+
 # clerk configuration (can include secrets)
 /.clerk/
 

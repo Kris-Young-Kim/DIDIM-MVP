@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, CheckCircle2 } from "lucide-react"
+import { ArrowRight, CheckCircle2, MessageSquare } from "lucide-react"
+import { useUser } from "@clerk/nextjs"
 
 export function HeroSection() {
+  const { isSignedIn } = useUser();
+
   return (
     <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
       {/* Background Gradients */}
@@ -31,6 +36,18 @@ export function HeroSection() {
               내 지원금 조회하기 <ArrowRight className="w-4 h-4 ml-2" />
             </Link>
           </Button>
+          {isSignedIn && (
+            <Button
+              asChild
+              size="lg"
+              className="h-12 px-8 rounded-full text-base bg-blue-500 hover:bg-blue-600 text-white"
+            >
+              <Link href="/chat">
+                <MessageSquare className="w-4 h-4 mr-2" />
+                AI챗봇 상담하기
+              </Link>
+            </Button>
+          )}
           <Button
             asChild
             size="lg"
@@ -54,6 +71,12 @@ export function HeroSection() {
             <CheckCircle2 className="w-4 h-4 text-blue-500" />
             <span>3초 간편 가입</span>
           </div>
+          {isSignedIn && (
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-blue-500" />
+              <span>AI 챗봇 상담</span>
+            </div>
+          )}
         </div>
       </div>
     </section>

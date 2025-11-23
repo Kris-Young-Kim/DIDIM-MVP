@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, MessageSquare } from "lucide-react"
+import { useUser } from "@clerk/nextjs"
 
 export function SiteHeader() {
+  const { isSignedIn } = useUser();
+
   return (
     <header className="fixed top-0 w-full z-50 border-b border-white/10 bg-black/50 backdrop-blur-xl">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -20,6 +25,12 @@ export function SiteHeader() {
           <Link href="/programs" className="hover:text-white transition-colors">
             지원 사업
           </Link>
+          {isSignedIn && (
+            <Link href="/chat" className="hover:text-white transition-colors flex items-center gap-1">
+              <MessageSquare className="w-4 h-4" />
+              AI챗봇
+            </Link>
+          )}
           <Link href="#pricing" className="hover:text-white transition-colors">
             요금제
           </Link>

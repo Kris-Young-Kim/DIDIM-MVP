@@ -53,20 +53,36 @@ export function ChatInterface() {
     try {
       const response = await sendChatMessage(userMessage.content);
       
+      // 응답 검증
+      if (!response || !response.message || response.message.trim().length === 0) {
+        throw new Error("AI가 응답을 생성하지 못했습니다.");
+      }
+      
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: response.message,
+        content: response.message.trim(),
         timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error("Chat error:", error);
+      
+      // 에러 메시지 추출
+      let errorMessageText = "죄송합니다. 답변을 생성하는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+      
+      if (error instanceof Error && error.message) {
+        // 사용자 친화적인 에러 메시지가 있으면 사용
+        if (error.message.includes("문의") || error.message.includes("시도") || error.message.includes("오류")) {
+          errorMessageText = error.message;
+        }
+      }
+      
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content: "죄송합니다. 답변을 생성하는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.",
+        content: errorMessageText,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);

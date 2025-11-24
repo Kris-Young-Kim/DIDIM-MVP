@@ -180,3 +180,32 @@
 .glass-card {
   @apply bg-black/40 backdrop-blur-md border border-white/10;
 }
+
+/* 버튼 호버 및 클릭 애니메이션 */
+@layer utilities {
+  /* 버튼 호버 효과 강화 */
+  button:hover,
+  [data-slot="button"]:hover,
+  a[data-slot="button"]:hover {
+    transform: translateY(-1px);
+  }
+
+  /* 버튼 클릭 효과 */
+  button:active,
+  [data-slot="button"]:active,
+  a[data-slot="button"]:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* 링크 호버 효과 */
+  a:not([data-slot="button"]):hover {
+    transition: all 0.2s ease;
+  }
+
+  /* 부드러운 전환 효과 */
+  * {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+}

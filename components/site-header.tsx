@@ -32,13 +32,13 @@ export function SiteHeader() {
         <nav aria-label="주요 네비게이션" className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
           <Link 
             href="#features" 
-            className={`hover:text-white transition-colors ${pathname === "/" ? "text-white" : ""}`}
+            className={`hover:text-white transition-all duration-200 hover:scale-105 ${pathname === "/" ? "text-white" : ""}`}
           >
             기능 소개
           </Link>
           <Link 
             href="/programs" 
-            className={`hover:text-white transition-colors ${isActive("/programs") ? "text-white font-semibold" : ""}`}
+            className={`hover:text-white transition-all duration-200 hover:scale-105 ${isActive("/programs") ? "text-white font-semibold" : ""}`}
             aria-current={isActive("/programs") ? "page" : undefined}
           >
             지원 사업
@@ -46,7 +46,7 @@ export function SiteHeader() {
           {isSignedIn && (
             <Link 
               href="/chat" 
-              className={`hover:text-white transition-colors flex items-center gap-1 ${isActive("/chat") ? "text-white font-semibold" : ""}`}
+              className={`hover:text-white transition-all duration-200 hover:scale-105 flex items-center gap-1 ${isActive("/chat") ? "text-white font-semibold" : ""}`}
               aria-current={isActive("/chat") ? "page" : undefined}
             >
               <MessageSquare className="w-4 h-4" aria-hidden="true" />
@@ -55,13 +55,13 @@ export function SiteHeader() {
           )}
           <Link 
             href="#pricing" 
-            className="hover:text-white transition-colors"
+            className="hover:text-white transition-all duration-200 hover:scale-105"
           >
             요금제
           </Link>
           <Link 
             href="/admin" 
-            className={`hover:text-white transition-colors ${isActive("/admin") ? "text-white font-semibold" : ""}`}
+            className={`hover:text-white transition-all duration-200 hover:scale-105 ${isActive("/admin") ? "text-white font-semibold" : ""}`}
             aria-current={isActive("/admin") ? "page" : undefined}
           >
             파트너스
@@ -85,11 +85,11 @@ export function SiteHeader() {
 
         {/* 데스크톱 우측 버튼 */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/login" className="text-sm font-medium text-gray-400 hover:text-white">
+          <Link href="/login" className="text-sm font-medium text-gray-400 hover:text-white transition-all duration-200 hover:scale-105">
             로그인
           </Link>
           <Button asChild className="bg-white text-black hover:bg-gray-200 rounded-full px-6">
-            <Link href="/check">
+            <Link href="/sign-up">
               시작하기 <ArrowRight className="w-4 h-4 ml-2" aria-hidden="true" />
             </Link>
           </Button>
@@ -106,14 +106,14 @@ export function SiteHeader() {
           <div className="container mx-auto px-4 py-4 space-y-2">
             <Link
               href="#features"
-              className="block py-3 px-4 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              className="block py-3 px-4 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
               onClick={() => setMobileMenuOpen(false)}
             >
               기능 소개
             </Link>
             <Link
               href="/programs"
-              className={`block py-3 px-4 rounded-lg transition-colors ${
+              className={`block py-3 px-4 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 ${
                 isActive("/programs")
                   ? "text-white font-semibold bg-white/10"
                   : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -126,7 +126,7 @@ export function SiteHeader() {
             {isSignedIn && (
               <Link
                 href="/chat"
-                className={`block py-3 px-4 rounded-lg transition-colors flex items-center gap-2 ${
+                className={`block py-3 px-4 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-2 ${
                   isActive("/chat")
                     ? "text-white font-semibold bg-white/10"
                     : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -140,14 +140,14 @@ export function SiteHeader() {
             )}
             <Link
               href="#pricing"
-              className="block py-3 px-4 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+              className="block py-3 px-4 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95"
               onClick={() => setMobileMenuOpen(false)}
             >
               요금제
             </Link>
             <Link
               href="/admin"
-              className={`block py-3 px-4 rounded-lg transition-colors ${
+              className={`block py-3 px-4 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 ${
                 isActive("/admin")
                   ? "text-white font-semibold bg-white/10"
                   : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -160,13 +160,13 @@ export function SiteHeader() {
             <div className="pt-4 border-t border-white/10 space-y-2">
               <Link
                 href="/login"
-                className="block py-3 px-4 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors text-center"
+                className="block py-3 px-4 text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 hover:scale-105 active:scale-95 text-center"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 로그인
               </Link>
               <Button asChild className="w-full bg-white text-black hover:bg-gray-200 rounded-full">
-                <Link href="/check" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/sign-up" onClick={() => setMobileMenuOpen(false)}>
                   시작하기 <ArrowRight className="w-4 h-4 ml-2" aria-hidden="true" />
                 </Link>
               </Button>

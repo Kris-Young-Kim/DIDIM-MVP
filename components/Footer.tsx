@@ -21,7 +21,7 @@ export function Footer() {
             <div className="mt-4 space-y-2">
               <a 
                 href="mailto:contact@didim.kr" 
-                className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-all duration-200 hover:scale-105"
                 aria-label="이메일로 문의하기"
               >
                 <Mail className="w-4 h-4" aria-hidden="true" />
@@ -29,7 +29,7 @@ export function Footer() {
               </a>
               <a 
                 href="tel:1670-5529" 
-                className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-colors"
+                className="flex items-center gap-2 text-sm text-gray-500 hover:text-white transition-all duration-200 hover:scale-105"
                 aria-label="전화로 문의하기"
               >
                 <Phone className="w-4 h-4" aria-hidden="true" />
@@ -41,17 +41,17 @@ export function Footer() {
             <h4 className="font-bold mb-4">서비스</h4>
             <ul className="space-y-2 text-sm text-gray-500">
               <li>
-                <Link href="/programs" className="hover:text-white transition-colors">
+                <Link href="/programs" className="hover:text-white transition-all duration-200 hover:scale-105 inline-block">
                   지원사업 찾기
                 </Link>
               </li>
               <li>
-                <Link href="/programs" className="hover:text-white transition-colors">
+                <Link href="/programs" className="hover:text-white transition-all duration-200 hover:scale-105 inline-block">
                   제품 둘러보기
                 </Link>
               </li>
               <li>
-                <Link href="/#features" className="hover:text-white transition-colors">
+                <Link href="/#features" className="hover:text-white transition-all duration-200 hover:scale-105 inline-block">
                   성공 사례
                 </Link>
               </li>
@@ -61,19 +61,19 @@ export function Footer() {
             <h4 className="font-bold mb-4">회사</h4>
             <ul className="space-y-2 text-sm text-gray-500">
               <li>
-                <Link href="/#features" className="hover:text-white transition-colors">
+                <Link href="/#features" className="hover:text-white transition-all duration-200 hover:scale-105 inline-block">
                   팀 소개
                 </Link>
               </li>
               <li>
-                <Link href="/#features" className="hover:text-white transition-colors">
+                <Link href="/#features" className="hover:text-white transition-all duration-200 hover:scale-105 inline-block">
                   채용
                 </Link>
               </li>
               <li>
                 <a 
                   href="mailto:contact@didim.kr" 
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-all duration-200 hover:scale-105 inline-block"
                 >
                   문의하기
                 </a>
@@ -85,10 +85,10 @@ export function Footer() {
           <p>© 2025 DIDIM. All rights reserved.</p>
           <nav aria-label="법적 정보">
             <div className="flex gap-4">
-              <Link href="/terms" className="hover:text-white transition-colors">
+              <Link href="/terms" className="hover:text-white transition-all duration-200 hover:scale-105">
                 이용약관
               </Link>
-              <Link href="/privacy" className="hover:text-white transition-colors">
+              <Link href="/privacy" className="hover:text-white transition-all duration-200 hover:scale-105">
                 개인정보처리방침
               </Link>
             </div>

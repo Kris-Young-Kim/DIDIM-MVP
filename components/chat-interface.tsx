@@ -74,7 +74,13 @@ export function ChatInterface() {
       
       if (error instanceof Error && error.message) {
         // 사용자 친화적인 에러 메시지가 있으면 사용
-        if (error.message.includes("문의") || error.message.includes("시도") || error.message.includes("오류")) {
+        if (
+          error.message.includes("문의") || 
+          error.message.includes("시도") || 
+          error.message.includes("오류") ||
+          error.message.includes("로그인") ||
+          error.message.includes("인증")
+        ) {
           errorMessageText = error.message;
         }
       }

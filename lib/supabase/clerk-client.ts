@@ -39,7 +39,23 @@ export function useClerkSupabaseClient() {
 
     return createClient(supabaseUrl, supabaseKey, {
       async accessToken() {
-        return (await getToken()) ?? null;
+        try {
+          // getToken이 함수인지 확인
+          if (typeof getToken !== 'function') {
+            console.warn('getToken is not a function, returning null');
+            return null;
+          }
+          return (await getToken()) ?? null;
+        } catch (error) {
+          console.error('Error getting token:', error);
+          return null;
+        }
+      },
+      // Realtime 설정 (빌드 시점 에러 방지)
+      realtime: {
+        params: {
+          eventsPerSecond: 10,
+        },
       },
     });
   }, [getToken]);
